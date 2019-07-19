@@ -54,7 +54,7 @@ else:
 try:
 	import pytf.core as pf
 except ModuleNotFoundError:
-		print("Module 'pytf' not found.To install,go in cmd,go to directory 'pyt-f/dist/' by command cd and when,write in console 'pip install pytf-1.1.tar.gz'")
+		print("Module 'pytf' not found.To install,go in cmd,and when,download the library and go to directory with this library,,write in console 'pip install pytf-1.1.tar.gz' and wait.")
 else:
 	print("Custom module \"PyTF\" imported!")
 try:
@@ -426,7 +426,7 @@ while langsys=="En/En":
         
         if NoLogin=="N" and langsys=="En/En":
                 print("Done by KrutosVIP and Zazio on Python.")
-                print("Libraries:sys,time,this,os,datetime,colorama")
+                print("Libraries:sys,time,this,os,datetime,colorama,PyTF")
                 print("This is a console PyT v1!")
                 print(time.ctime())
                 print("To see availlible commands,type 'help'")
@@ -450,7 +450,7 @@ while langsys=="En/En":
                                 wrlfunc()
                                 
                         elif user_input == "version":
-                                print("Version of PyT-v.1.1 Language update PRE-RELEASE ^_^")
+                                print("Version of PyT-v.1.1 Language update^_^")
                                 print("Done on Python 3.6.4")
                                 log.append(pt2)
                                 wrlfunc()
@@ -653,7 +653,7 @@ while langsys=="Ru/Ru":
         
         if NoLogin=="N" and langsys=="Ru/Ru":
                 print("Сделано KrutosVIP и Zazio на Python.")
-                print("Библеотеки:sys,time,this,os,datetime,colorama")
+                print("Библеотеки:sys,time,this,os,datetime,colorama,PyTF")
                 print("Это консоль PyT v1!")
                 print(time.ctime())
                 print("Чтобы увидеть известные команды,введите 'помощь'")
@@ -678,7 +678,7 @@ while langsys=="Ru/Ru":
                                 wrlfunc()
                                 
                         elif user_input == "версия":
-                                print("Версия-v.1.1 Language update PRE-RELEASE :З")
+                                print("Версия-v.1.1 Language update :З")
                                 print("Done on Python 3.6.4")
                                 log.append(pt2)
                                 wrlfunc()
