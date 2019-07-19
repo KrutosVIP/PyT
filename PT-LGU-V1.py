@@ -398,7 +398,7 @@ while langsys=="En/En":
                                 print("author - Prints the console`s author")
                                 print("calc - Calculate what you want")
                                 print("this - (INFORMATION DELETED)")
-                                print("editor - activating FileEditor.(in devolepment,at this moment:unknown how this works,it needs test.Only with dev license.)" )
+                                print("editor - activating FileEditor." )
                                 
                         elif user_input == "version":
                                 print("Version of PyT-v.1.0 Language update :)")
