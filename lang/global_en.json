@@ -1,0 +1,42 @@
+{
+	"kernel": {
+		"kstart_0": "Starting up kernel",
+		"kstart_1": "with shell",
+		"os_mem_fs_start": "Creating OSFS and MemoryFS...",
+		"load_mod_bin": "Loading modules and binaries...",
+		"startup": "Starting up...",
+		"startup_error_0": "Module %s not found!",
+		"startup_error_1": "Aborting startup...",
+		"interpretator": "Starting with Python"
+	},
+	"debug": {
+		"mfs_c": "Creating MemoryFS...",
+		"osfs_c": "Creating OSFS...",
+		"mfs_c_2": "Creating MemoryFS..."
+	},
+	"modules": {
+		"module": "Module",
+		"error": "Unknown error!",
+		"load": "Loading modules...",
+		"success": "Modules loaded!"
+	},
+	"binary": {
+		"binary": "Binary",
+		"error": "Unknown error!",
+		"load": "Loading binaries...",
+		"success": "Binaries loaded!"
+	},
+	"pyt": {
+		"color": "{fore.lightblue_ex}",
+		"welcome": "Welcome to PyT2!\n\n{%s}Thank you, Shamus Rezol for this very beautiful parsing module! {%d}",
+		"logging": {
+			"error": "No logging module in ../mod!"
+		},
+		"login": {
+			"need": "Log-in needed!",
+			"invalid": "Invalid login or password.",
+			"login": "Username: ",
+			"password": "Password: "
+		}
+	}
+}

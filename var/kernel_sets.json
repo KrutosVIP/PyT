@@ -1,0 +1,15 @@
+{
+	"lang": "en",
+	"accounts": {
+		"root": null,
+		"user": null
+	},
+	"account_options": {
+		"root": {
+			"root_acc": true
+		},
+		"user": {
+			"root_acc": false
+		}
+	}
+}
