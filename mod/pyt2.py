@@ -118,17 +118,23 @@ class PyT2(Module):
                             self.info["user"] = user
         session = True
         while session:
-            if accs_o[self.info["user"]]["root_acc"]:
-                print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} # "), end = "")
-                u_i = input()
-            else:
-                print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} {self.cwd} $ "), end = "")
-                u_i = input()
-            parse = u_i.split(" ")
-            if parse[0] in info[10]:
-                info2 = info.copy(); info2.append(u_i)
-                stdlib = STDLib(info2)
-                info[10][parse[0]].info["run"](stdlib, self)
+            try:
+                if accs_o[self.info["user"]]["root_acc"]:
+                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} # "), end = "")
+                    u_i = input()
+                else:
+                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} $ "), end = "")
+                    u_i = input()
+                parse = u_i.split(" ")
+                if parse[0] in info[10]:
+                    info2 = info.copy(); info2.append(u_i)
+                    stdlib = STDLib(info2)
+                    info[10][parse[0]].info["run"](stdlib, self)
+                else:
+                    if not u_i.isspace() and not u_i == "":
+                        print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+            except KeyboardInterrupt:
+                print()
     
         
 

@@ -18,6 +18,7 @@ def main():
                     print("Emergency: No recovery!!!")
                 else:
                     r.run()
+                    sys.exit()
             elif b == "os":
                 boot_os()
             else:
@@ -28,14 +29,16 @@ def main():
                     print("Emergency: No recovery!!!")
                 else:
                     r.run()
+                    sys.exit()
     else:
-        print("Emergency: Booting recovery.")
+        print("Emergency: Booting recovery - No JSON file")
         try:
             r = dynamic_import("recovery")
         except:
             print("Emergency: No recovery!!!")
         else:
             r.run()
+            sys.exit()
         
 
 def boot_os():

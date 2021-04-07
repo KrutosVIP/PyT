@@ -72,3 +72,4 @@ def reboot():
     def dynamic_import(module):
         return importlib.import_module(module)
     r = dynamic_import("kinit").main()
+    sys.exit()

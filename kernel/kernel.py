@@ -41,10 +41,19 @@ class BaseKernel:
         if debug:
             print("DEBUG: Reading language files...")
         self.lines = self.json_load(f"../lang/global_{self.lang}.json")
-        
-        print(f"{self.lines['kernel']['kstart_0']} {self.info['name']} {self.info['version']} {self.lines['kernel']['kstart_1']} {self.info['shell']}")
-        print(f"{self.lines['kernel']['interpretator']} {sys.version}")
-        print(self.lines['kernel']['os_mem_fs_start'])
+    
+        if debug:
+            print(f"{self.lines['kernel']['kstart_0_debug']} {self.info['name']} {self.info['version']} {self.lines['kernel']['kstart_1']} {self.info['shell']}")
+        else:
+            print(f"{self.lines['kernel']['kstart_0']} {self.info['name']} {self.info['version']} {self.lines['kernel']['kstart_1']} {self.info['shell']}")
+
+        if self.info["custom"]:
+            print(self.lines['kernel']['kernel_mod'])
+
+        if debug:
+            print(f"{self.lines['kernel']['interpretator']} {sys.version}")
+        if debug:
+            print(self.lines['kernel']['os_mem_fs_start'])
         
         if debug:
             print(f"DEBUG: {self.lines['debug']['mfs_c']}")
@@ -57,10 +66,12 @@ class BaseKernel:
         if debug:
             print(f"DEBUG: {self.lines['debug']['mfs_c_2']}")
         self.ramfs_load()
-        print(self.lines['kernel']['load_mod_bin'])
-        self.modules = load_modules(self.info["module"], self.lines['modules'])
-        self.binaries = load_binaries(self.info["shbin"], self.lines['binary'])
-        print(self.lines['kernel']['startup'])
+        if debug:
+            print(self.lines['kernel']['load_mod_bin'])
+        self.modules = load_modules(self.info["module"], self.lines['modules'], debug)
+        self.binaries = load_binaries(self.info["shbin"], self.lines['binary'], debug)
+        if debug:
+            print(self.lines['kernel']['startup'])
         
         self.startup()
         

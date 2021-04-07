@@ -173,7 +173,7 @@ class Encode(Binary):
         args = info.info[15].split(" ")[1:]
         if len(args) > 0:
             try:
-                print(dae.to_bits(info.info[15].replace("encode", "")))
+                print(dae.to_bits(info.info[15].replace("encode ", "")))
             except:
                 print()
         else:
@@ -198,7 +198,7 @@ class Decode(Binary):
         args = info.info[15].split(" ")[1:]
         if len(args) > 0:
             try:
-                print(dae.to_text(info.info[15].replace("decode", "")))
+                print(dae.to_text(info.info[15].replace("decode ", "")))
             except:
                 print()
         else:

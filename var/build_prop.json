@@ -1,12 +1,12 @@
 {	
 	"properties": [
-		"PyT-Kernel_21-20_060421_userdebug",
-		"0.0.1rc1",
+		"PyT-Kernel_19-43_070421_userdebug",
+		"0.0.1rc2",
 		["pyt2"],
 		"../mod",
 		"pyt2",
 		"../bin",
-		true,
+		false,
 		false,
 		"pyt2"
 		]

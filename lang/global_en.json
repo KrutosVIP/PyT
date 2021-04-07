@@ -1,13 +1,15 @@
 {
 	"kernel": {
-		"kstart_0": "Starting up kernel",
+		"kstart_0": "Starting up PyT2 with kernel",
+		"kstart_0_debug": "Starting up PyT2 in debug mode with kernel",
 		"kstart_1": "with shell",
 		"os_mem_fs_start": "Creating OSFS and MemoryFS...",
 		"load_mod_bin": "Loading modules and binaries...",
 		"startup": "Starting up...",
 		"startup_error_0": "Module %s not found!",
 		"startup_error_1": "Aborting startup...",
-		"interpretator": "Starting with Python"
+		"interpretator": "Starting with Python",
+		"kernel_mod": "[WARNING] Kernel modified, work at your own risk!"
 	},
 	"debug": {
 		"mfs_c": "Creating MemoryFS...",
@@ -29,6 +31,7 @@
 	"pyt": {
 		"color": "{fore.lightblue_ex}",
 		"welcome": "Welcome to PyT2!\n\n{%s}Thank you, Shamus Rezol for this very beautiful parsing module! {%d}",
+		"invalid_command": "[ERROR] Unknown command {cmd}",
 		"logging": {
 			"error": "No logging module in ../mod!"
 		},
@@ -36,7 +39,7 @@
 			"need": "Log-in needed!",
 			"invalid": "Invalid login or password.",
 			"login": "Username: ",
-			"password": "Password: "
+			"password": "Password: "	
 		}
 	}
 }

@@ -7,9 +7,10 @@ sys.path.insert(0, f"./types")
 from binary import Binary
 from module import Module
 
-def load_modules(modules, lines_l):
+def load_modules(modules, lines_l, debug):
     mods = {}
-    print(f"{lines_l['load']}")
+    if debug:
+        print(f"{lines_l['load']}")
     
     files = os.listdir(modules)
     sys.path.insert(0, f"{modules}")
@@ -21,7 +22,8 @@ def load_modules(modules, lines_l):
                 m = dynamic_import(os.path.splitext(mod)[0])
                 
             except Exception as e:
-                print(f"{lines_l['error']} - {type(e).__name__}: {e}")
+                if debug:
+                    print(f"{lines_l['error']} - {type(e).__name__}: {e}")
                 
             m = m.__dict__
             for el in m:
@@ -29,23 +31,26 @@ def load_modules(modules, lines_l):
                     if type(m[el]).__name__ == "type":
                         
                         if issubclass(m[el], Module) and m[el] != Module:
-                            print(f"{lines_l['module']}: {el}")
+                            if debug:
+                                print(f"{lines_l['module']}: {el}")
                             mod_temp = m[el]()
                             if mod_temp.info["codename"] in mods:
                                 pass
                             else:
                                 mods.update( {mod_temp.info["codename"]: mod_temp})
                 except Exception as e:
-                    print(e)
+                    if debug:
+                        print(e)
                     
     sys.path.pop(0)
-    
-    print(f"{lines_l['success']}")
+    if debug:
+        print(f"{lines_l['success']}")
     return mods
 
-def load_binaries(bins, lines_l):
+def load_binaries(bins, lines_l, debug):
     binaries = {}
-    print(f"{lines_l['load']}")
+    if debug:
+        print(f"{lines_l['load']}")
     
     files = os.listdir(bins)
     sys.path.insert(0, f"{bins}")
@@ -58,7 +63,8 @@ def load_binaries(bins, lines_l):
                 b = dynamic_import(os.path.splitext(binary)[0])
                 
             except Exception as e:
-                print(f"{lines_l['error']} - {type(e).__name__}: {e}")
+                if debug:
+                    print(f"{lines_l['error']} - {type(e).__name__}: {e}")
             else:
                 b = b.__dict__
                 
@@ -67,7 +73,8 @@ def load_binaries(bins, lines_l):
                         if type(b[el]).__name__ == "type":
                             
                             if issubclass(b[el], Binary) and b[el] != Binary:
-                                print(f"{lines_l['binary']}: {el}")
+                                if debug:
+                                    print(f"{lines_l['binary']}: {el}")
                                 bin_temp = b[el]()
                                 
                                 if bin_temp.info["codename"] in binaries:
@@ -76,13 +83,14 @@ def load_binaries(bins, lines_l):
                                     binaries.update( {bin_temp.info["codename"]: bin_temp})
                                     
                     except Exception as e:
-                        print(e)
+                        if debug:
+                            print(e)
                     
                 
                     
     sys.path.pop(0)
-    
-    print(f"{lines_l['success']}")
+    if debug:
+        print(f"{lines_l['success']}")
     return binaries
 
 
