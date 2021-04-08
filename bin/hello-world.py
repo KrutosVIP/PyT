@@ -13,11 +13,11 @@ class HelloWorld(Binary):
             "codename": "helloworld",
             "dependencies" : [], # Not Supported.
             "run": self.run,
-            "on_load": self.on_load
+            "on_load": self.startup
         }
 
-    def on_load(self, info):
-        pass #do something
+    def startup(self, info):
+        print("Hello World Program Loaded!")
 
     def run(self, info, pyt):
         print("test")
