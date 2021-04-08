@@ -1,0 +1,7 @@
+{
+	"name": "Clear.",
+	"version": "1.0", 
+	"description": "Clear console",
+	"codename": "clear",
+	"alias": "cls"
+}

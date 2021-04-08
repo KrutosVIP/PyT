@@ -39,7 +39,9 @@
 			"need": "Log-in needed!",
 			"invalid": "Invalid login or password.",
 			"login": "Username: ",
-			"password": "Password: "	
+			"password": "Password: ",
+			"autologin": "Using activated autologin.",
+			"auto_invalid": "Auto failed!"
 		}
 	}
 }

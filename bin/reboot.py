@@ -12,6 +12,7 @@ class Reboot(Binary):
             "version" : "v1",
             "codename": "reboot",
             "dependencies" : [], # Not Supported.
+            "description": "Reboot. Args - os/recovery",
             "run": self.run,
             "on_load": self.on_load
         }

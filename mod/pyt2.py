@@ -1,4 +1,4 @@
-import sys, json
+import sys, json, os
 from colorama import Back, Fore, Style
 from colorama import init as cinit
 import argparse, random
@@ -66,13 +66,17 @@ class PyT2(Module):
     def __init__(self):
         self.info = {
             "name" : "PyT v2",
-            "version" : "0.0.1a0",
+            "version" : "0.0.1rc3",
             "codename": "pyt2",
             "dependencies" : [],
             "on_load" : self.on_load,
             "console": True,
             "user": None
         }
+
+    def json_load(self, file):
+        with open(file, "r") as f:
+            return json.load(f)
 
     def on_load(self, info):
         self.kinfo = info
@@ -99,23 +103,45 @@ class PyT2(Module):
                 accs = json.loads(d)["accounts"]
                 accs_o = json.loads(d)["account_options"]
             print(info[11]["pyt"]["login"]["need"])
-            
-            while self.info["user"] == None:
-                user = input(info[11]["pyt"]["login"]["login"])
+            autolog = self.json_load("../var/kernel_sets.json")["autologin"]
+            if autolog["active"]:
+                print(info[11]["pyt"]["login"]["autologin"])
+                user = autolog["account"]["name"]
+                passwd = autolog["account"]["password"]
                 if user in accs:
                     if accs[user] == None:
                         self.info["user"] = user
 
-                if self.info["user"] == None:
-                    passwd = input(info[11]["pyt"]["login"]["password"])
-                    
-                    if not user in accs:
-                        print(info[11]["pyt"]["login"]["invalid"])
-                    else:
-                        if not accs[user] != passwd:
+                    if self.info["user"] == None:
+                        if not user in accs:
                             print(info[11]["pyt"]["login"]["invalid"])
-                        elif accs[user] == passwd:
+                        else:
+                            if accs[user] != passwd:
+                                print(info[11]["pyt"]["login"]["invalid"])
+                            elif accs[user] == passwd:
+                                self.info["user"] = user
+                if self.info["user"] == None:
+                    print(info[11]["pyt"]["login"]["auto_invalid"])
+                
+            while self.info["user"] == None:
+                try:
+                    user = input(info[11]["pyt"]["login"]["login"])
+                    if user in accs:
+                        if accs[user] == None:
                             self.info["user"] = user
+
+                    if self.info["user"] == None:
+                        passwd = input(info[11]["pyt"]["login"]["password"])
+                        
+                        if not user in accs:
+                            print(info[11]["pyt"]["login"]["invalid"])
+                        else:
+                            if accs[user] != passwd:
+                                print(info[11]["pyt"]["login"]["invalid"])
+                            elif accs[user] == passwd:
+                                self.info["user"] = user
+                except KeyboardInterrupt:
+                    print()
         session = True
         while session:
             try:
@@ -126,7 +152,18 @@ class PyT2(Module):
                     print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} $ "), end = "")
                     u_i = input()
                 parse = u_i.split(" ")
+                            
                 if parse[0] in info[10]:
+                    if os.path.exists("../var/history.json"):
+                        with open("../var/history.json") as f:
+                            history = json.load(f)
+                    else:
+                        history = {"history": []}
+
+                        
+                    history["history"].append({parse[0]: "".join(parse[1:])})
+                    with open("../var/history.json", "w") as f:
+                        history = json.dump(history, f)
                     info2 = info.copy(); info2.append(u_i)
                     stdlib = STDLib(info2)
                     info[10][parse[0]].info["run"](stdlib, self)

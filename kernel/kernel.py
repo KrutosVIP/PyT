@@ -61,8 +61,7 @@ class BaseKernel:
         
         if debug:
             print(f"DEBUG: {self.lines['debug']['osfs_c']}")
-        self.fs = OSFS("../")
-
+        self.mount_all()
         if debug:
             print(f"DEBUG: {self.lines['debug']['mfs_c_2']}")
         self.ramfs_load()
@@ -91,6 +90,11 @@ class BaseKernel:
     def json_load(self, file):
         with open(file, "r") as f:
             return json.load(f)
+
+    def mount_all(self):
+        self.fs = MountFS()
+        self.fss = [OSFS("../bin"), OSFS("../cpkg"), OSFS("../data"), OSFS("../kernel"), OSFS("../lang"), OSFS("../man"), OSFS("../mod")]
+        self.fs.mount("/", OSFS("../"))
 
     def exit(self):
         self.ram_fs.close()

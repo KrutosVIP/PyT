@@ -156,10 +156,11 @@ class dae2:
 class Encode(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Encode to DAE v2.",
+            "name" : "Encode - DAE v2.",
             "version" : "v2",
             "codename": "encode",
             "dependencies" : [], # Not Supported.
+            "description": "Encode to DAE v2.",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -181,10 +182,11 @@ class Encode(Binary):
 class Decode(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Decode from DAE v2.",
+            "name" : "Decode - DAE v2.",
             "version" : "v2",
             "codename": "decode",
             "dependencies" : [], # Not Supported.
+            "description": "Decode to DAE v2.",
             "run": self.run,
             "on_load": self.on_load
         }

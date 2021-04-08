@@ -49,6 +49,7 @@ def load_modules(modules, lines_l, debug):
 
 def load_binaries(bins, lines_l, debug):
     binaries = {}
+    #help_d = {}
     if debug:
         print(f"{lines_l['load']}")
     
@@ -77,10 +78,24 @@ def load_binaries(bins, lines_l, debug):
                                     print(f"{lines_l['binary']}: {el}")
                                 bin_temp = b[el]()
                                 
-                                if bin_temp.info["codename"] in binaries:
-                                    pass
-                                else:
-                                    binaries.update( {bin_temp.info["codename"]: bin_temp})
+                                if not type(bin_temp.info["codename"]).__name__  in ("tuple", "list"):
+                                    if bin_temp.info["codename"] in binaries:
+                                        pass
+                                    else:
+                                        binaries.update( {bin_temp.info["codename"]: bin_temp})
+                                        #help_d.update({bin_temp.info["codename"]: {"name": bin_temp.info["name"], "description": bin_temp.info["description"]}})
+                                        
+                                elif type(bin_temp.info["codename"]).__name__  in ("tuple", "list"):
+                                        for name in bin_temp.info["codename"]:
+                                            if name in binaries:
+                                                pass
+                                            else:
+                                                binaries.update( {name: bin_temp})
+                                        #if len(bin_temp.info["codename"]) > 2:
+                                            #help_d.update({bin_temp.info["codename"][0]: {"name": bin_temp.info["name"], "description": bin_temp.info["description"], "aliases": bin_temp.info["codename"][1:]}})
+                                        #else:
+                                            #help_d.update({bin_temp.info["codename"][0]: {"name": bin_temp.info["name"], "description": bin_temp.info["description"]}})
+                                
                                     
                     except Exception as e:
                         if debug:
@@ -91,7 +106,7 @@ def load_binaries(bins, lines_l, debug):
     sys.path.pop(0)
     if debug:
         print(f"{lines_l['success']}")
-    return binaries
+    return binaries#, help_d
 
 
     
