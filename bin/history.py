@@ -27,9 +27,9 @@ class History(Binary):
         pass
 
     def run(self, info, pyt):
-        lang = self.json_load("../var/kernel_sets.json")["lang"]
-        if os.path.isfile(f"../lang/history_{lang}.json"):
-            with open(f"../lang/history_{lang}.json", "r") as f:
+        lang = self.json_load(f"{info.info[14].basefs}/../var/kernel_sets.json")["lang"]
+        if os.path.isfile(f"{info.info[14].basefs}/../lang/history_{lang}.json"):
+            with open(f"{info.info[14].basefs}/../lang/history_{lang}.json", "r") as f:
                 lang = json.load(f)
         else:
             lang = {
@@ -37,8 +37,8 @@ class History(Binary):
                     "cmd_args": ["Command:", "::Args:"],
                     "no_file": "[Error] No history yet."       
                 }
-        if os.path.exists("../var/history.json"):
-            with open("../var/history.json") as f:
+        if os.path.exists(f"{info.info[14].basefs}/../var/history.json"):
+            with open(f"{info.info[14].basefs}/../var/history.json") as f:
                 history = json.load(f)
             print(lang["history"])
             cmd_num = 1
@@ -49,6 +49,7 @@ class History(Binary):
                     else:
                         print(f"{cmd_num}: {lang['cmd_args'][0]} {cmd}")
                     cmd_num += 1
+
         else:
             print(lang["no_file"])
             
