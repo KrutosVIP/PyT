@@ -10,7 +10,7 @@ def dynamic_import(module):
 class RecoveryKernel:
     def __init__(self):
         self.info = {
-                "name": "PyT-RKernel_20-29_070421_userdebug",
+                "name": "PyT-RKernel_17-54_090421_userdebug",
                 "version": "0.0.1rc2",
                 "dependencies": None,
                 "module": None,
@@ -56,10 +56,19 @@ class RecoveryKernel:
         cc = cmds()
         while not EXIT:
             self.cwd = os.getcwd()
-            u_i = input(f"{self.cwd}> ")
-            parse = u_i.split(" ")
-            if parse[0] in cc.cmds:
-                cc.cmds[parse[0]](parse)
+            try:
+                u_i = input(f"{self.cwd}> ")
+                try:
+                    parse = u_i.split(" ")
+                    if parse[0] in cc.cmds:
+                        cc.cmds[parse[0]](parse)
+                    else:
+                        if not u_i.isspace() and not u_i == "":
+                            print("[INFO] Unknown command {cmd}".replace("{cmd}", parse[0]))
+                except Exception as e:
+                    print("[ERROR] Unknown error in command.")
+            except KeyboardInterrupt:
+                print()
             
 class cmds:
     def __init__(self):

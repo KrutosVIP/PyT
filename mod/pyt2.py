@@ -1,4 +1,4 @@
-import sys, json
+import sys, json, os, traceback
 from colorama import Back, Fore, Style
 from colorama import init as cinit
 import argparse, random
@@ -66,13 +66,19 @@ class PyT2(Module):
     def __init__(self):
         self.info = {
             "name" : "PyT v2",
-            "version" : "0.0.1a0",
+            "version" : "0.0.1",
             "codename": "pyt2",
             "dependencies" : [],
             "on_load" : self.on_load,
             "console": True,
             "user": None
         }
+
+
+
+    def json_load(self, file):
+        with open(file, "r") as f:
+            return json.load(f)
 
     def on_load(self, info):
         self.kinfo = info
@@ -86,55 +92,117 @@ class PyT2(Module):
         text = text.replace('{fore.black}', Fore.BLACK).replace('{fore.blue}', Fore.BLUE).replace('{fore.cyan}', Fore.CYAN).replace('{fore.green}', Fore.GREEN).replace('{fore.lightblack_ex}', Fore.LIGHTBLACK_EX).replace('{fore.lightblue_ex}', Fore.LIGHTBLUE_EX).replace('{fore.lightcyan_ex}', Fore.LIGHTCYAN_EX).replace('{fore.lightgreen_ex}', Fore.LIGHTGREEN_EX).replace('{fore.lightmagenta_ex}', Fore.LIGHTMAGENTA_EX).replace('{fore.lightred_ex}', Fore.LIGHTRED_EX).replace('{fore.lightwhite_ex}', Fore.LIGHTWHITE_EX).replace('{fore.lightyellow_ex}', Fore.LIGHTYELLOW_EX).replace('{fore.magenta}', Fore.MAGENTA).replace('{fore.red}', Fore.RED).replace('{fore.reset}', Fore.RESET).replace('{fore.white}', Fore.WHITE).replace('{fore.yellow}', Fore.YELLOW)
         text = text.replace('{style.bright}', Style.BRIGHT).replace('{style.dim}', Style.DIM).replace('{style.normal}', Style.NORMAL).replace('{style.reset_all}', Style.RESET_ALL)
         return text
+
+    def login(self, info):
+        while self.info["user"] == None:
+            try:
+                user = input(info[11]["pyt"]["login"]["login"])
+                if user in self.accs:
+                    if self.accs[user] == None:
+                        self.info["user"] = user
+
+                if self.info["user"] == None:
+                    passwd = input(info[11]["pyt"]["login"]["password"])
+                        
+                    if not user in self.accs:
+                        print(info[11]["pyt"]["login"]["invalid"])
+                    else:
+                        if self.accs[user] != passwd:
+                            print(info[11]["pyt"]["login"]["invalid"])
+                        elif self.accs[user] == passwd:
+                            self.info["user"] = user
+            except KeyboardInterrupt:
+                print()
+
+    def autologin(self, info):
+        autolog = self.json_load(f"{info[14].basefs}/../var/kernel_sets.json")["autologin"]
+        if autolog["active"]:
+            print(info[11]["pyt"]["login"]["autologin"])
+            user = autolog["account"]["name"]
+            passwd = autolog["account"]["password"]
+            if user in self.accs:
+                if self.accs[user] == None:
+                    self.info["user"] = user
+
+                if self.info["user"] == None:
+                    if not user in self.accs:
+                        print(info[11]["pyt"]["login"]["invalid"])
+                    else:
+                        if self.accs[user] != passwd:
+                            print(info[11]["pyt"]["login"]["invalid"])
+                        elif self.accs[user] == passwd:
+                            self.info["user"] = user
+            if self.info["user"] == None:
+                print(info[11]["pyt"]["login"]["auto_invalid"])
+    
     def run(self, info):
+        self.fs_type ={
+"extfs": os.getcwd(),
+"sysfs": "/"
+            }
+        self.fs = ["sysfs", self.fs_type["sysfs"]]
+        
         if self.error == 1:
             return
         print(info[11]["pyt"]["welcome"].replace("{%s}", self.color(random.choice(["{fore.black}","{fore.blue}",
 "{fore.cyan}","{fore.green}","{fore.lightblack_ex}","{fore.lightblue_ex}","{fore.lightcyan_ex}","{fore.lightgreen_ex}","{fore.lightmagenta_ex}",
 "{fore.lightred_ex}","{fore.lightwhite_ex}","{fore.lightyellow_ex}","{fore.magenta}","{fore.red}","{fore.reset}","{fore.white}","{fore.yellow}"]))).replace("{%d}", Style.RESET_ALL) + "\n(/cpkg/fargparse) (https://ru.stackoverflow.com/questions/1252352/%d0%9f%d0%b0%d1%80%d1%81%d0%b8%d0%bd%d0%b3-%d1%81%d1%82%d1%80%d0%be%d0%ba-%d0%bd%d0%b0-python-3-x)")
-        
+    
         if self.info["user"] == None:
-            with open("../var/kernel_sets.json", "r") as f:
+            with open(f"{info[14].basefs}/../var/kernel_sets.json", "r") as f:
                 d = f.read()
                 accs = json.loads(d)["accounts"]
                 accs_o = json.loads(d)["account_options"]
+                self.accs = accs
+                self.accs_o = accs_o
+            del d
             print(info[11]["pyt"]["login"]["need"])
             
-            while self.info["user"] == None:
-                user = input(info[11]["pyt"]["login"]["login"])
-                if user in accs:
-                    if accs[user] == None:
-                        self.info["user"] = user
-
-                if self.info["user"] == None:
-                    passwd = input(info[11]["pyt"]["login"]["password"])
-                    
-                    if not user in accs:
-                        print(info[11]["pyt"]["login"]["invalid"])
-                    else:
-                        if not accs[user] != passwd:
-                            print(info[11]["pyt"]["login"]["invalid"])
-                        elif accs[user] == passwd:
-                            self.info["user"] = user
+            self.autologin(info)
+            self.login(info)
+            
         session = True
+        print(info[11]['pyt']["current_root"].replace("{root}", self.fs[0]))
         while session:
             try:
+                if len(self.fs[1]) > 40:
+                    self.tempfs = "..." + self.fs[1][len(self.fs[1])-40:]
+                else:
+                    self.tempfs = self.fs[1]
+                    
                 if accs_o[self.info["user"]]["root_acc"]:
-                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} # "), end = "")
+                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} {self.tempfs} # "), end = "")
                     u_i = input()
                 else:
-                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} $ "), end = "")
+                    print(self.color(f"{info[11]['pyt']['color']}{self.info['user']}@{info[8]}{Style.RESET_ALL} {self.tempfs} $ "), end = "")
                     u_i = input()
                 parse = u_i.split(" ")
-                if parse[0] in info[10]:
-                    info2 = info.copy(); info2.append(u_i)
-                    stdlib = STDLib(info2)
-                    info[10][parse[0]].info["run"](stdlib, self)
-                else:
-                    if not u_i.isspace() and not u_i == "":
-                        print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+
+                
+                try:
+                    if parse[0] in info[10]:
+                        if os.path.exists(f"{info[14].basefs}/../var/history.json"):
+                            with open(f"{info[14].basefs}/../var/history.json") as f:
+                                history = json.load(f)
+                        else:
+                            history = {"history": []}
+
+                            
+                        history["history"].append({parse[0]: "".join(parse[1:])})
+                        with open(f"{info[14].basefs}/../var/history.json", "w") as f:
+                            history = json.dump(history, f)
+                        info2 = info.copy(); info2.append(u_i)
+                        stdlib = STDLib(info2)
+                        info[10][parse[0]].info["run"](stdlib, self)
+                    else:
+                        if not u_i.isspace() and not u_i == "":
+                            print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+                except Exception as e:
+                    traceback.print_exc()
             except KeyboardInterrupt:
                 print()
-    
+            except Exception as e:
+                traceback.print_exc()
+                info[14].panic(info[11]['pyt']['unknown_kpanic'])
         
 

@@ -1,7 +1,11 @@
 {
 	"lang": "en",
+	"autologin": {
+		"active": true,
+		"account": {"name": "root", "password": "root"} 
+	}, 
 	"accounts": {
-		"root": null,
+		"root": "root",
 		"user": null
 	},
 	"account_options": {

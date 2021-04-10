@@ -1,18 +1,18 @@
-﻿import sys, json, os, importlib
+import sys, json, os, importlib
 from colorama import Back, Fore, Style
 from colorama import init as cinit
 import argparse
 sys.path.insert(0, "../types")
 cinit()
 from binary import Binary
-class Exit(Binary):
+class UName(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Exit",
+            "name" : "Uname",
             "version" : "v1",
-            "codename": ["exit", "poweroff"],
+            "codename": "uname",
             "dependencies" : [], # Not Supported.
-            "description": "Exit command.",
+            "description": "Get uname",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -21,6 +21,5 @@ class Exit(Binary):
         pass
 
     def run(self, info, pyt):
-        sys.exit()
-
-
+        sets = info.info[14].uname
+        print(" ".join(list(sets.values())))

@@ -9,7 +9,9 @@
 		"startup_error_0": "Module %s not found!",
 		"startup_error_1": "Aborting startup...",
 		"interpretator": "Starting with Python",
-		"kernel_mod": "[WARNING] Kernel modified, work at your own risk!"
+		"kernel_mod": "[WARNING] Kernel modified, work at your own risk!",
+		"kpanic": "!!!KERNEL PANIC!!!",
+		"kpanic_1": "[EMERGENCY]"
 	},
 	"debug": {
 		"mfs_c": "Creating MemoryFS...",
@@ -32,6 +34,9 @@
 		"color": "{fore.lightblue_ex}",
 		"welcome": "Welcome to PyT2!\n\n{%s}Thank you, Shamus Rezol for this very beautiful parsing module! {%d}",
 		"invalid_command": "[ERROR] Unknown command {cmd}",
+		"unknown_kpanic": "PyT 2 cannot work because unknown error!",
+		"kmodify_kpanic": "!!! [WARNING] Kernel modified, don`t send report! !!!",
+		"current_root": "Current root is {root}\nType chroot to change root.",
 		"logging": {
 			"error": "No logging module in ../mod!"
 		},
@@ -39,7 +44,9 @@
 			"need": "Log-in needed!",
 			"invalid": "Invalid login or password.",
 			"login": "Username: ",
-			"password": "Password: "	
+			"password": "Password: ",
+			"autologin": "Using activated autologin.",
+			"auto_invalid": "Auto failed!"
 		}
 	}
 }

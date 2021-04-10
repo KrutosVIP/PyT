@@ -33,6 +33,16 @@ class BaseKernel:
                 "hname": info[8]
         }
         debug = self.info['debug']
+
+        self.uname = {
+            "kname": "PyT-Zen",
+            "version": self.info["version"],
+            "distrotype": "PyT-v2",
+            "name": self.info["name"],
+            "ktype": "PyZen-PyT"
+        }
+
+        self.basefs = os.getcwd()
         
         if debug:
             print("DEBUG: Reading language...")
@@ -61,8 +71,7 @@ class BaseKernel:
         
         if debug:
             print(f"DEBUG: {self.lines['debug']['osfs_c']}")
-        self.fs = OSFS("../")
-
+        self.mount_all()
         if debug:
             print(f"DEBUG: {self.lines['debug']['mfs_c_2']}")
         self.ramfs_load()
@@ -92,10 +101,23 @@ class BaseKernel:
         with open(file, "r") as f:
             return json.load(f)
 
+    def mount_all(self):
+        self.fs = OSFS("../")
+
     def exit(self):
         self.ram_fs.close()
         self.fs.close()
         sys.exit()
+
+    def panic(self, reason):
+        print(self.lines['kernel']['kpanic'] + "\n" + self.lines['kernel']["kpanic_1"], reason)
+        if self.info["custom"]:
+            print(self.lines['pyt']['kmodify_kpanic'])
+        try:
+            while True:
+                pass
+        except KeyboardInterrupt:
+            pass
     
     def startup(self):
         e = 0

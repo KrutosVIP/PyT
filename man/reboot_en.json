@@ -1,0 +1,6 @@
+{
+	"name": "Reboot",
+	"version": "1.0", 
+	"description": "Reboot machine\nArgs: recovery/os",
+	"codename": "reboot"
+}

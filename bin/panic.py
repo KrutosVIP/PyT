@@ -5,14 +5,14 @@ import argparse
 sys.path.insert(0, "../types")
 cinit()
 from binary import Binary
-class Exit(Binary):
+class Kpanic(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Exit",
+            "name" : "Panic",
             "version" : "v1",
-            "codename": ["exit", "poweroff"],
+            "codename": "kpanic",
             "dependencies" : [], # Not Supported.
-            "description": "Exit command.",
+            "description": "Devtool for creating kpanic",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -21,6 +21,6 @@ class Exit(Binary):
         pass
 
     def run(self, info, pyt):
-        sys.exit()
+        info.info[14].panic("Not syncing!")
 
 

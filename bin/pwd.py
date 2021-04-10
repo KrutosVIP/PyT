@@ -5,14 +5,14 @@ import argparse
 sys.path.insert(0, "../types")
 cinit()
 from binary import Binary
-class Exit(Binary):
+class Pwd(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Exit",
+            "name" : "Pwd",
             "version" : "v1",
-            "codename": ["exit", "poweroff"],
+            "codename": "pwd",
             "dependencies" : [], # Not Supported.
-            "description": "Exit command.",
+            "description": "Get working directory",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -21,6 +21,6 @@ class Exit(Binary):
         pass
 
     def run(self, info, pyt):
-        sys.exit()
+        print(pyt.fs[1])
 
 
