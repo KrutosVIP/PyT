@@ -46,7 +46,7 @@ class Reboot(Binary):
                     with open(f"{info.info[14].basefs}/../var/boot.json", "w") as f:
                         json.dump(b, f)
                     print(lang["boot_option"][0].replace("{args}", args))
-                    reboot()
+                    reboot(info)
                 else:
                     print()
             else:
@@ -61,11 +61,11 @@ class Reboot(Binary):
                         json.dump(b, f)
                         
                     print(lang["boot_option"][1])
-                    reboot()
+                    reboot(info)
             else:
                 print(lang["no_file"])
 
-def reboot():
+def reboot(info):
     os.chdir(f"{info.info[14].basefs}/..")
     for f in dir():
         if f not in ["importlib"]:

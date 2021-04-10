@@ -1,3 +1,4 @@
 colorama
 fs
 psutil
+requests
