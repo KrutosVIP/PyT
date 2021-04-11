@@ -9,7 +9,7 @@ class HelloWorld(Binary):
     def __init__(self):
         self.info = {
             "name" : "Download file from the Internet",
-            "version" : "v1",
+            "version" : "v1.0.1",
             "codename": "uget",
             "dependencies" : [], # Not Supported.
             "run": self.run,
