@@ -1,4 +1,5 @@
 colorama
 fs
 psutil
-requests
+urllib3
+shutil
