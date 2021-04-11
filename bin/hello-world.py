@@ -9,7 +9,7 @@ class HelloWorld(Binary):
     def __init__(self):
         self.info = {
             "name" : "Hello World program",
-            "version" : "v1",
+            "version" : "v1.1.0",
             "codename": "helloworld",
             "dependencies" : [], # Not Supported.
             "run": self.run,
@@ -20,4 +20,4 @@ class HelloWorld(Binary):
         print("Hello World Program Loaded!")
 
     def run(self, info, pyt):
-        print("test")
+        print("Hello World!")

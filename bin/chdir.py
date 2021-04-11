@@ -6,7 +6,7 @@ sys.path.insert(0, "../types")
 cinit()
 #from binary import Binary
 class Binary():
-	pass
+    	pass
 class chdir(Binary):
     def __init__(self):
         self.info = {

@@ -1,0 +1,6 @@
+{
+	"name": "Русский перевод",
+	"version": "1.0.0", 
+	"description": "Переводит PyT на русский язык",
+	"codename": "translation_ru"
+}

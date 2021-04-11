@@ -1,4 +1,4 @@
 {
-                    "relogin": "Re-loggined as {user}",
-                    "error": "Cannot relogin."
+    "relogin": "Re-loggined as {user}",
+    "error": "Cannot relogin."
 }

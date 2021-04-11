@@ -1,0 +1,6 @@
+{
+	"name": "Зашифровать",
+	"version": "1.0.0", 
+	"description": "Шифрует в DAE v2",
+	"codename": "encode"
+}

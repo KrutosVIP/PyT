@@ -1,0 +1,7 @@
+{
+	"name": "Очистить.",
+	"version": "1.0.0", 
+	"description": "Чистит консоль",
+	"codename": "clear",
+	"alias": "cls"
+}
