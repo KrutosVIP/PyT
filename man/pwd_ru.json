@@ -1,0 +1,6 @@
+{
+	"name": "Pwd",
+	"version": "1.0.0", 
+	"description": "Получает рабочую директорию",
+	"codename": "pwd"
+}

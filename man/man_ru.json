@@ -1,0 +1,7 @@
+{
+	"name": "Man или помощь.",
+	"version": "1.0.0", 
+	"description": "Помощь, ничего такого",
+	"codename": "help",
+	"alias": "man"
+}

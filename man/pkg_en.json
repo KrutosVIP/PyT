@@ -1,0 +1,6 @@
+{
+	"name": "pkg",
+	"version": "1.0.0", 
+	"description": "Downloading additional packages from the PyT Repos.",
+	"codename": "pkg"
+}

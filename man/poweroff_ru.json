@@ -1,0 +1,7 @@
+{
+	"name": "Закрыть",
+	"version": "1.0.0", 
+	"description": "Закрывает PyT2",
+	"codename": "exit",
+	"alias": "poweroff"
+}

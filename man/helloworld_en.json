@@ -1,0 +1,6 @@
+{
+	"name": "Hello World Program",
+	"version": "1.1.0", 
+	"description": "Print \"Hello World!\" into the console",
+	"codename": "helloworld"
+}
