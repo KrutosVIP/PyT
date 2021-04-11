@@ -1,3 +1,5 @@
 colorama
 fs
 psutil
+urllib3
+shutil
