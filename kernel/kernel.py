@@ -92,10 +92,10 @@ class BaseKernel:
         subfs = self.ram_fs.makedir("/lang/")
         with subfs.open('global.json', "w") as mf:
             try:
-                with open(f"../lang/global_{self.lang}.json", "r") as f:
+                with open(f"../lang/global_{self.lang}.json", "r", encoding = "utf-8") as f:
                     mf.write(f.read())
             except FileNotFoundError:
-                with open(f"../lang/global_en.json", "r") as f:
+                with open(f"../lang/global_en.json", "r", encoding = "utf-8") as f:
                     mf.write(f.read())
         subfs.close()
         subfs = self.ram_fs.makedir("/var/")
@@ -106,7 +106,7 @@ class BaseKernel:
         subfs.close()
 
     def json_load(self, file):
-        with open(file, "r") as f:
+        with open(file, "r", encoding = "utf-8") as f:
             return json.load(f)
 
     def mount_all(self):

@@ -1,0 +1,6 @@
+{
+	"name": "Changelang",
+	"version": "1.0.0", 
+	"description": "Меняет язык\nИспользование: changelang [ru\\en]",
+	"codename": "changelang"
+}

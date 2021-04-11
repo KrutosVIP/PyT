@@ -1,11 +1,11 @@
-import sys, json, os, importlib, urllib.request, shutil
+import sys, json, os, importlib, requests
 from colorama import Back, Fore, Style
 from colorama import init as cinit
 import argparse
+from progress.bar import Bar
 sys.path.insert(0, "../types")
-cinit()
 from binary import Binary
-class HelloWorld(Binary):
+class UGet(Binary):
     def __init__(self):
         self.info = {
             "name" : "Download file from the Internet",
@@ -25,8 +25,21 @@ class HelloWorld(Binary):
         print("Downloading file from " + args[0])
         url = args[0]
         path = args[1]
-        with urllib.request.urlopen(url) as rsp, open(path, 'wb') as outfile: shutil.copyfileobj(rsp, outfile)
-        print("File downloaded")
+        r = requests.get(url, stream=True)
+        size = r.headers['content-length']
+        if size:
+            p = Bar(f'{path}>', max=int(size), fill = "#", suffix='%(percent)d%%')
+        else:
+            p = Spinner(f'### {path}')
+            
+        with open(path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024*50):
+                if chunk: # filter out keep-alive new chunks
+                    p.next(len(chunk))
+                    f.write(chunk)
+
+        p.finish()
+        print("\rFile downloaded")
 
 
 

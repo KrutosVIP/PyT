@@ -27,7 +27,7 @@ class Help(Binary):
     def run(self, info, pyt):
         lang = self.json_load("../var/kernel_sets.json")["lang"]
         if os.path.isfile(f"../lang/help_{lang}.json"):
-            with open(f"../lang/help_{lang}.json", "r") as f:
+            with open(f"../lang/help_{lang}.json", "r", encoding = "utf-8") as f:
                 lang = json.load(f)
         else:
             lang = {
@@ -57,12 +57,12 @@ class Help(Binary):
         if args != "all":
             print(lang["seek_manual"].replace("{cmd}", args))
             if os.path.isfile(f"../man/{args}_{lang_g}.json"):
-                with open(f"../man/{args}_{lang_g}.json", "r") as f:
+                with open(f"../man/{args}_{lang_g}.json", "r", encoding = "utf-8") as f:
                     man = json.load(f)
             else:
                 print(lang["no_lang_1"].replace("{cmd}", args), lang["no_lang_2"])
                 if os.path.isfile(f"../man/{args}_en.json"):
-                    with open(f"../man/{args}_en.json", "r") as f:
+                    with open(f"../man/{args}_en.json", "r", encoding = "utf-8") as f:
                         man = json.load(f)
                 else:
                     print(lang["no_lang_4"].replace("{cmd}", args), lang["no_lang_3"])

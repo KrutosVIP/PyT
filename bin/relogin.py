@@ -18,7 +18,7 @@ class Relogin(Binary):
         }
 
     def json_load(self, file):
-        with open(file, "r") as f:
+        with open(file, "r", encoding = "utf-8") as f:
             return json.load(f)
 
     def on_load(self, info):
@@ -26,7 +26,7 @@ class Relogin(Binary):
 
     def run(self, info, pyt):
         lang = self.json_load("../var/kernel_sets.json")["lang"]
-        if os.path.isfile(f"../lang/relogin_{lang}.json"):
+        if os.path.isfile(f"../lang/relogin_{lang}.json", encoding = "utf-8"):
             with open(f"../lang/relogin_{lang}.json", "r") as f:
                 lang = json.load(f)
         else:

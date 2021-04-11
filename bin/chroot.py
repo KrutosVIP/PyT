@@ -21,13 +21,13 @@ class chroot(Binary):
         pass
 
     def json_load(self, file):
-        with open(file, "r") as f:
+        with open(file, "r", encoding = "utf-8") as f:
             return json.load(f)
 
     def run(self, info, pyt):
         lang = self.json_load(f"{info.info[14].basefs}/../var/kernel_sets.json")["lang"]
         if os.path.isfile(f"{info.info[14].basefs}/../lang/chroot_{lang}.json"):
-            with open(f"{info.info[14].basefs}/../lang/chroot_{lang}.json", "r") as f:
+            with open(f"{info.info[14].basefs}/../lang/chroot_{lang}.json", "r", encoding = "utf-8") as f:
                 lang = json.load(f)
         else:
             lang = {
