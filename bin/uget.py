@@ -22,7 +22,7 @@ class HelloWorld(Binary):
     def run(self, info, pyt):
         args = info.info[15].split(" ")[1:]
         if len(args) < 2: return print("No URLs or file path provided.")
-        print("Downloading file fro11m " + args[0])
+        print("Downloading file from " + args[0])
         url = args[0]
         path = args[1]
         with urllib.request.urlopen(url) as rsp, open(path, 'wb') as outfile: shutil.copyfileobj(rsp, outfile)
