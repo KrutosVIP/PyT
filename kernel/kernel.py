@@ -50,8 +50,12 @@ class BaseKernel:
         
         if debug:
             print("DEBUG: Reading language files...")
-        self.lines = self.json_load(f"../lang/global_{self.lang}.json")
-    
+        try:
+            self.lines = self.json_load(f"../lang/global_{self.lang}.json")
+        except FileNotFoundError:
+            print("[WARNING] Language " + self.lang + " doesn't exists! Setting language to en...")
+            self.lines = self.json_load(f"../lang/global_en.json")
+
         if debug:
             print(f"{self.lines['kernel']['kstart_0_debug']} {self.info['name']} {self.info['version']} {self.lines['kernel']['kstart_1']} {self.info['shell']}")
         else:
@@ -87,8 +91,12 @@ class BaseKernel:
     def ramfs_load(self):
         subfs = self.ram_fs.makedir("/lang/")
         with subfs.open('global.json', "w") as mf:
-            with open(f"../lang/global_{self.lang}.json", "r") as f:
-                mf.write(f.read())
+            try:
+                with open(f"../lang/global_{self.lang}.json", "r") as f:
+                    mf.write(f.read())
+            except FileNotFoundError:
+                with open(f"../lang/global_en.json", "r") as f:
+                    mf.write(f.read())
         subfs.close()
         subfs = self.ram_fs.makedir("/var/")
         for file in os.listdir("../var/"):
