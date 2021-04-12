@@ -1,5 +1,7 @@
 rm var/history.json
+rm var/boot.json
 echo "{\"history\": []}" > var/history.json
+echo "{\"boot\": \"os\"}" > var/boot.json
 rm types/__pycache__ -rf
 rm temp/__pycache__ -rf
 rm mod/__pycache__ -rf

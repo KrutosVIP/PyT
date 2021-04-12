@@ -37,6 +37,7 @@ class Help(Binary):
                     "desc": "Description:",
                     "alias": "Aliases:",
                     "version": "Version:",
+                    "deps": "Dependencies:",
                     "seek_manual": "Trying to find manual for command {cmd}",
                     "all": "All commands:", 
                     "no_lang_1": "Can`t find manual for {cmd}.",
@@ -92,6 +93,9 @@ class Help(Binary):
             if "description" in man:
                 if man["description"] != None:
                     print(lang["desc"], man["description"])
+            if "deps" in man:
+                if man["deps"] != None:
+                    print(lang["deps"], man["deps"])
         elif args == "all":
             print(lang["all"])
             print(", ".join(info.info[10].keys()))

@@ -5,6 +5,7 @@
                     "desc": "Description:",
                     "alias": "Aliases:",
                     "version": "Version:",
+                    "deps": "Dependencies:",
                     "seek_manual": "Trying to find manual for command {cmd}",
                     "all": "All commands:", 
                     "no_lang_1": "Can`t find manual for {cmd}.",

@@ -1,6 +1,6 @@
 {
 	"name": "English traslation",
-	"version": "1.1.0", 
+	"version": "1.1.1", 
 	"description": "Translate PyT to English language",
 	"codename": "translation_en"
 }
