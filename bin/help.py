@@ -9,7 +9,7 @@ class Help(Binary):
     def __init__(self):
         self.info = {
             "name" : "Manuals",
-            "version" : "v1",
+            "version" : "v1.0.1",
             "codename": ["help", "man"],
             "dependencies" : [], # Not Supported.
             "description": "help - Args - command name",

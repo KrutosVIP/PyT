@@ -9,7 +9,7 @@ class chroot(Binary):
     def __init__(self):
         self.info = {
             "name" : "Chroot",
-            "version" : "v1",
+            "version" : "v1.0.1",
             "codename": "chroot",
             "dependencies" : [], # Not Supported.
             "description": "Change root between extfs and sysfs.",

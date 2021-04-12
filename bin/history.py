@@ -10,7 +10,7 @@ class History(Binary):
     def __init__(self):
         self.info = {
             "name" : "Commands history.",
-            "version" : "v1",
+            "version" : "v1.0.1",
             "codename": "history",
             "dependencies" : [], # Not Supported.
             "description": "Get commands history",

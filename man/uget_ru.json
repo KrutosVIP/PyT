@@ -1,6 +1,6 @@
 {
 	"name": "UGet",
-	"version": "1.0.1", 
+	"version": "1.1.0", 
 	"description": "Скачивает файлы с Интернета\n\nuget [ссылка] [названиефайла]",
 	"codename": "uget"
 }

@@ -9,7 +9,7 @@ class Relogin(Binary):
     def __init__(self):
         self.info = {
             "name" : "Re-login",
-            "version" : "v1",
+            "version" : "v1.0.1",
             "codename": "relogin",
             "dependencies" : [], # Not Supported.
             "description": "Re-login into account.",

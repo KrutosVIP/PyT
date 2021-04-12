@@ -9,7 +9,7 @@ class UGet(Binary):
     def __init__(self):
         self.info = {
             "name" : "Download file from the Internet",
-            "version" : "v1.0.1",
+            "version" : "v1.1.0",
             "codename": "uget",
             "dependencies" : [], # Not Supported.
             "run": self.run,
