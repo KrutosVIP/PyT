@@ -3,13 +3,14 @@ from colorama import Back, Fore, Style
 from colorama import init as cinit
 import argparse
 from progress.bar import Bar
+from progress.spinner import Spinner
 sys.path.insert(0, "../types")
 from binary import Binary
 class UGet(Binary):
     def __init__(self):
         self.info = {
             "name" : "Download file from the Internet",
-            "version" : "v1.1.0",
+            "version" : "v1.1.1",
             "codename": "uget",
             "dependencies" : [], # Not Supported.
             "run": self.run,
@@ -26,7 +27,10 @@ class UGet(Binary):
         url = args[0]
         path = args[1]
         r = requests.get(url, stream=True)
-        size = r.headers['content-length']
+        if "content-length" in r.headers:
+            size = r.headers["content-length"]
+        else:
+            size = False
         if size:
             p = Bar(f'{path}>', max=int(size), fill = "#", suffix='%(percent)d%%')
         else:
