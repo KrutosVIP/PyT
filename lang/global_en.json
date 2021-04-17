@@ -33,7 +33,7 @@
 	"pyt": {
 		"color": "{fore.lightblue_ex}",
 		"welcome": "Welcome to PyT2!\n\n{%s}Thank you, Shamus Rezol for this very beautiful parsing module! {%d}",
-		"invalid_command": "[ERROR] Unknown command {cmd}",
+		"invalid_command": "[ERROR] Unknown command or executable with name {cmd}",
 		"unknown_kpanic": "PyT 2 cannot work because unknown error!",
 		"kmodify_kpanic": "!!! [WARNING] Kernel modified, don`t send report! !!!",
 		"current_root": "Current root is {root}\nType chroot to change root.",

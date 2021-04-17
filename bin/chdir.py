@@ -4,15 +4,15 @@ from colorama import init as cinit
 import argparse
 sys.path.insert(0, "../types")
 cinit()
-#from binary import Binary
-class Binary():
-    	pass
+from binary import Binary
+#class Binary():
+ #   	pass
 class chdir(Binary):
     def __init__(self):
         self.info = {
             "name" : "Change dir",
             "version" : "v1",
-            "codename": "chdir",
+            "codename": "cd",
             "dependencies" : [], # Not Supported.
             "description": "Change working directory",
             "run": self.run,
@@ -40,15 +40,22 @@ class chdir(Binary):
         if len(args) > 0:
             args = args[0]
             args_2 = "".join(args[0:])
+        else:
+            return
         if pyt.fs[0] == "extfs":
-            if os.path.isdir(args):
-                os.chdir(args)
-                pyt.fs[1] = os.getcwd()
-            elif os.path.isdir(args_2):
-                os.chdir(args_2)
-                pyt.fs[1] = os.getcwd()
+#            print(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
+            if os.path.isdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
+                pyt.fs[1] = os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))
             else:
                 print(lang["no_dir"])
+#            if os.path.isdir(os.path.abspath(args)):
+#                pyt.fs[1] = os.path.abspath(args)
+#            else:
+#                if os.path.isdir(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")):
+#                        pyt.fs[1] = pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")
+                #os.chdir(args_2)
+                #pyt.fs[1] = os.getcwd()
+#                else:
         elif pyt.fs[0] == "sysfs":
             print(lang["sysfs_err"])
 
