@@ -12,7 +12,7 @@ class listdir(Binary):
             "version" : "v1",
             "codename": "ls",
             "dependencies" : [], # Not Supported.
-            "description": "Change working directory",
+            "description": "List files in dir",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -28,23 +28,40 @@ class listdir(Binary):
         pass
 
     def json_load(self, file):
-        with open(file, "r") as f:
+        with open(file, "r",  encoding = "utf-8") as f:
             return json.load(f)
 
     def listdir(self, dir):
+        i = 1
         for file in os.listdir(dir):
-            if os.path.isfile(file):
+            #print(os.path.isfile(dir.replace("\\", "/") + "/" + file.replace("\\", "/")))
+            if os.path.isfile(dir.replace("\\", "/") + "/" + file.replace("\\", "/")):
                 if os.path.splitext(file)[1] in self.types:
-                    print(self.types[os.path.splitext(file)[1]], file, Style.RESET_ALL, end = " ")
+                    if " " in list(file):
+                        print(self.types[os.path.splitext(file)[1]]+"'" + file+ "'"+Style.RESET_ALL, end = " ")
+                    else:
+                        print(self.types[os.path.splitext(file)[1]]+file+ Style.RESET_ALL, end = " ")
+                    #print(self.types[os.path.splitext(file)[1]], os.path.splitext(file)[1], Style.RESET_ALL)
+                        
                 else:
-                    print(file, end = " ")
-            else: 
-                print(self.types["dir"], file, Style.RESET_ALL, end = " ")
+                    if " " in list(file):
+                        print("'"+file+"'", end = " ")
+                    else:
+                        print(file, end = " ")
+            else:
+                if " " in list(file):
+                    print(self.types["dir"]+ '"'+ file + '"'+ Style.RESET_ALL, end = " ")
+                else:
+                    print(self.types["dir"]+ file+ Style.RESET_ALL, end = " ")
+            if i == 6:
+                i = 0
+                print()
+            i+=1
         print()
     def run(self, info, pyt):
         lang = self.json_load(f"{info.info[14].basefs}/../var/kernel_sets.json")["lang"]
-        if os.path.isfile(f"{info.info[14].basefs}/../lang/chdir_{lang}.json"):
-            with open(f"{info.info[14].basefs}/../lang/chdir_{lang}.json", "r") as f:
+        if os.path.isfile(f"{info.info[14].basefs}/../lang/listdir_{lang}.json"):
+            with open(f"{info.info[14].basefs}/../lang/listdir_{lang}.json", "r") as f:
                 lang = json.load(f)
         else:
             lang = {
@@ -56,8 +73,11 @@ class listdir(Binary):
             args = args[0]
             args_2 = "".join(args[0:])
         else:
-            self.listdir(pyt.fs[1])
-            return
+            if pyt.fs[0] == "extfs":
+                self.listdir(pyt.fs[1])
+                return
+            else:
+                print(lang["sysfs_err"])
         if pyt.fs[0] == "extfs":
             if os.path.isdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
                 self.listdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
