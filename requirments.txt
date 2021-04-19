@@ -4,3 +4,4 @@ fs
 psutil
 requests
 progress
+python-slugify
