@@ -78,6 +78,7 @@ class listdir(Binary):
                 return
             else:
                 print(lang["sysfs_err"])
+                return
         if pyt.fs[0] == "extfs":
             if os.path.isdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
                 self.listdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
@@ -87,3 +88,4 @@ class listdir(Binary):
                 return
         elif pyt.fs[0] == "sysfs":
             print(lang["sysfs_err"])
+            return

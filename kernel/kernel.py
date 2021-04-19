@@ -43,7 +43,8 @@ class BaseKernel:
         }
 
         self.basefs = os.getcwd()
-        
+        if not os.path.isdir(f"{self.basefs}/../data"):
+            os.mkdir(f"{self.basefs}/../data")
         if debug:
             print("DEBUG: Reading language...")
         self.lang = self.json_load("../var/kernel_sets.json")["lang"]
@@ -104,6 +105,25 @@ class BaseKernel:
                 with open(f"../var/{file}", "r") as f:
                     mf.write(f.read())
         subfs.close()
+
+    def login(self, user, passwd):
+        with open(f"{self.basefs}/../var/kernel_sets.json", "r") as f:
+            d = f.read()
+            accs = json.loads(d)["accounts"]
+        if user in accs:
+            if accs[user] == None:
+                self.user = user
+                return user       
+        if not user in accs:
+            self.user = None
+            return None
+        else:
+            if accs[user] != passwd:
+                self.user = None
+                return None
+            elif accs[user] == passwd:
+                self.user = user
+                return user
 
     def json_load(self, file):
         with open(file, "r", encoding = "utf-8") as f:

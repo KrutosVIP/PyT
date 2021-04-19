@@ -1,0 +1,6 @@
+{
+	"name": "echo",
+	"version": "1.0.0", 
+	"description": "Echo some text, supported console colors: \nBackground:\n{back.black},\n{back.blue},\n{back.cyan},\n{back.green},\n{back.lightblack_ex},\n{back.lightblue_ex},\n{back.lightcyan_ex},\n{back.lightgreen_ex},\n{back.lightmagenta_ex},\n{back.lightred_ex},\n{back.lightwhite_ex},\n{back.lightyellow_ex},\n{back.magenta},\n{back.red},\n{back.reset},\n{back.white},\n{back.yellow}\n\nForeground:\n{fore.black},\n{fore.blue},\n{fore.cyan},\n{fore.green},\n{fore.lightblack_ex},\n{fore.lightblue_ex},\n{fore.lightcyan_ex},\n{fore.lightgreen_ex},\n{fore.lightmagenta_ex},\n{fore.lightred_ex},\n{fore.lightwhite_ex},\n{fore.lightyellow_ex},\n{fore.magenta},\n{fore.red},\n{fore.reset},\n{fore.white},\n{fore.yellow}\n\nStyle:\n{style.bright},\n{style.dim},\n{style.normal},\n{style.reset_all}",
+	"codename": "echo"
+}

@@ -1,0 +1,7 @@
+{
+                    "no_dir": "[Error] No input dirs",
+                    "dir": "[Error] Cannot remove dir.",
+                    "sysfs_err": "[Warning] SysFS not supported now.",
+                    "file": "[Error] Cannot remove file.",
+                    "unknown_dir": "[Error] Unknown dir(-s)!"
+}

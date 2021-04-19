@@ -1,18 +1,22 @@
 import sys, json, os, importlib
 from colorama import Back, Fore, Style
 from colorama import init as cinit
+import re
 import argparse
 sys.path.insert(0, "../types")
 cinit()
+
+from slugify import slugify
+
 from binary import Binary
-class cat(Binary):
+class touch(Binary):
     def __init__(self):
         self.info = {
-            "name" : "Cat",
+            "name" : "Touch",
             "version" : "v1",
-            "codename": "cat",
+            "codename": "touch",
             "dependencies" : [], # Not Supported.
-            "description": "Cat file",
+            "description": "Create new file without anything.",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -24,32 +28,35 @@ class cat(Binary):
         with open(file, "r",  encoding = "utf-8") as f:
             return json.load(f)
 
-    def read(self, file):
-        with open(file, "r", encoding = "utf-8") as f:
-            return print(f.read())
+    def create(self, file):
+        with open(file, "w", encoding = "utf-8") as f:
+            pass
+        return
     def run(self, info, pyt):
         lang = self.json_load(f"{info.info[14].basefs}/../var/kernel_sets.json")["lang"]
-        if os.path.isfile(f"{info.info[14].basefs}/../lang/cat_{lang}.json"):
-            with open(f"{info.info[14].basefs}/../lang/cat_{lang}.json", "r") as f:
+        if os.path.isfile(f"{info.info[14].basefs}/../lang/touch_{lang}.json"):
+            with open(f"{info.info[14].basefs}/../lang/touch_{lang}.json", "r") as f:
                 lang = json.load(f)
         else:
             lang = {
-                    "no_file": "[Error] Unknown file.",
+                    "file": "[Error] File exists.",
+                    "no_file": "[Error] No input files",
                     "sysfs_err": "[Warning] SysFS not supported now."
                 }
         args = info.info[15].split(" ")[1:]
         if len(args) > 0:
-            args = args[0]
-            args_2 = "".join(args[0:])
+            args_2 = args[0:]
         else:
             print(lang["no_file"])
             return
         if pyt.fs[0] == "extfs":
-            if os.path.isfile(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
-                self.read(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
-                return 
-            else:
-                print(lang["no_file"])
-                return
+            for args in args_2:
+                args = os.path.splitext(args)
+                args = slugify(args[0]) + "." + slugify(args[1])
+                if os.path.isfile(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
+                    print(lang["file"])
+                else:
+                    self.create(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
+            return
         elif pyt.fs[0] == "sysfs":
             print(lang["sysfs_err"])

@@ -1,6 +1,6 @@
 {
 	"name": "Change dir",
-	"version": "1.0.0", 
+	"version": "1.4", 
 	"description": "Change working directory",
 	"codename": "chdir"
 }
