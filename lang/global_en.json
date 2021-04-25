@@ -31,7 +31,6 @@
 		"success": "Binaries loaded!"
 	},
 	"pyt": {
-		"color": "{fore.lightblue_ex}",
 		"welcome": "Welcome to PyT2!\n\n{%s}Thank you, Shamus Rezol for this very beautiful parsing module! {%d}",
 		"invalid_command": "[ERROR] Unknown command or executable with name {cmd}",
 		"unknown_kpanic": "PyT 2 cannot work because unknown error!",
@@ -48,5 +47,12 @@
 			"autologin": "Using activated autologin.",
 			"auto_invalid": "Auto failed!"
 		}
+	},
+	"plm": {
+		"plm":"PyT Login Manager",
+		"welcome": "Welcome to PLM, login into to continue.",
+		"login": "Log-in into your account. If your account has no password, don`t type anything in password.\nFirst is a username and second is a password",
+		"yes": "Log-in",
+		"no": "Quit PLM"
 	}
 }

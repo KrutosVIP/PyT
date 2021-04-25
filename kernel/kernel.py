@@ -148,6 +148,7 @@ class BaseKernel:
             pass
     
     def startup(self):
+        self.user = None
         e = 0
         for d in self.info["dependencies"]:
             if not d in self.modules:
@@ -161,7 +162,9 @@ class BaseKernel:
             i.append(self.modules); i.append(self.binaries)
             i.append(self.lines); i.append(self.fs); i.append(self.ram_fs); i.append(self)
             self.modules[mod].info["on_load"](i)
-
+        if "plm" in self.modules:
+            if self.modules["plm"].info["login-manager"]:
+                self.user = self.modules["plm"].run(i)
         if "console" in self.modules[self.info["shell"]].info.keys():
             if self.modules[self.info["shell"]].info["console"]:
                 self.modules[self.info["shell"]].run(i)
