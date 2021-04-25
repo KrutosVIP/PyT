@@ -1,7 +1,7 @@
 {	
 	"properties": [
-		"PyT-Kernel_21-30_110421_userdebug",
-		"0.0.1-rc6",
+		"PyT-Kernel_21-23_250421_testkeys",
+		"0.0.1-rc7-testing",
 		["pyt2"],
 		"../mod",
 		"pyt2",

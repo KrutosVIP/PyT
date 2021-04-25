@@ -5,3 +5,4 @@ psutil
 requests
 progress
 python-slugify
+prompt_toolkit

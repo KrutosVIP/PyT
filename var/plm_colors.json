@@ -1,0 +1,13 @@
+{
+        "dialog": "[transparent]",
+        "dialog.body": "[transparent]",
+        "frame": "[transparent]",
+        "frame.border": "[transparent]",
+        "frame.label": "[transparent]",
+        "button": "[transparent]",
+        "button.arrow": "[transparent]",
+        "button.text": "[transparent]",
+        "label": "[transparent]",
+        "text-area": "[transparent]",
+        "shadow": "[transparent]"
+}
