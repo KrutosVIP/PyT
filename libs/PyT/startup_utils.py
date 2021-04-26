@@ -19,4 +19,4 @@ def pytrc(self, info):
             os.mkdir(f"{info[14].basefs}/../data/{self.info['user']}")
         with open(f"{info[14].basefs}/../data/{self.info['user']}/.pytrc", "w") as f:
             f.write("\n{fore.yellow}Using default .pytrc for user.{style.reset_all}\n{style.bright}Welcome to {fore.lightblue_ex}PyT {fore.red}v2{style.reset_all}{style.bright}\nCurrent user: {fore.cyan}{user}{style.reset_all}{style.bright}\nCurrent date: {fore.green}{time}{style.reset_all}")
-        self.pytrc(info)
+        pytrc(self, info)

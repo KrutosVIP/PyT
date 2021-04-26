@@ -137,9 +137,8 @@ class PyT2(Module):
 
                 u_i = InputMethod(self, accs_o[self.info["user"]]["root_acc"], PStyle, info)     
                 parse = u_i.split(" ")
-                
+                self.fs[1] = self.fs[1].replace("//", "/")
                 try:
-
                     cmd_exc_temp = cmd_exec(self, parse, info, u_i, PTSTD, redirect, STDLib)
                     if not cmd_exc_temp:
                         redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i, execute, executable, parse) 

@@ -38,7 +38,7 @@ class Plm(Module):
                     style = Style.from_dict(self.json_load(f"{info[14].basefs}/../var/plm_colors.json"))
                 else:
                     style = None
-                account = login_dialog(info[11]["plm"]["plm"], info[11]["pyt"]["login"]["login"], info[11]["plm"]["yes"], info[11]["plm"]["no"], style).run()
+                account = login_dialog(info[11]["plm"]["plm"], info[11]["plm"]["login"], info[11]["plm"]["yes"], info[11]["plm"]["no"], style).run()
                 user, passwd = account[0], account[1]
                 if user in self.accs:
                     if self.accs[user] == None:
