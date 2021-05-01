@@ -2,6 +2,8 @@ from colorama import Back, Fore, Style
 from colorama import init as cinit
 
 class STDLib:
+    class Exit: # Return it when need to normal exit PyT
+        pass
     def __init__(self, info):
         self.info = info
     def color(self, text):

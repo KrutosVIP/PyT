@@ -68,9 +68,10 @@ class Reboot(Binary):
 def reboot(info):
     os.chdir(f"{info.info[14].basefs}/..")
     for f in dir():
-        if f not in ["importlib"]:
+        if f not in ["importlib", "info"]:
             del f
     def dynamic_import(module):
         return importlib.import_module(module)
+    info.info[14].sctl.end()
     r = dynamic_import("kinit").main()
-    sys.exit()
+    info.info[14].exit()

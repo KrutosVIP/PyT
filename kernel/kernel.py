@@ -4,7 +4,8 @@ from fs.osfs import OSFS
 from fs.mountfs import MountFS
 
 sys.path.append("./kernel")
-from kmod import load_modules, load_binaries
+from kmod import load_modules, load_binaries, load_binaries_dynamic
+from ksystemctl import SystemCTL
 class BaseKernel:
     def __init__(self, info: list):
         """
@@ -71,40 +72,17 @@ class BaseKernel:
             print(self.lines['kernel']['os_mem_fs_start'])
         
         if debug:
-            print(f"DEBUG: {self.lines['debug']['mfs_c']}")
-        self.ram_fs = MemoryFS()
-        
-        if debug:
             print(f"DEBUG: {self.lines['debug']['osfs_c']}")
         self.mount_all()
         if debug:
-            print(f"DEBUG: {self.lines['debug']['mfs_c_2']}")
-        self.ramfs_load()
-        if debug:
             print(self.lines['kernel']['load_mod_bin'])
         self.modules = load_modules(self.info["module"], self.lines['modules'], debug)
-        self.binaries = load_binaries(self.info["shbin"], self.lines['binary'], debug)
+        
         if debug:
             print(self.lines['kernel']['startup'])
         
         self.startup()
         
-    def ramfs_load(self):
-        subfs = self.ram_fs.makedir("/lang/")
-        with subfs.open('global.json', "w") as mf:
-            try:
-                with open(f"../lang/global_{self.lang}.json", "r", encoding = "utf-8") as f:
-                    mf.write(f.read())
-            except FileNotFoundError:
-                with open(f"../lang/global_en.json", "r", encoding = "utf-8") as f:
-                    mf.write(f.read())
-        subfs.close()
-        subfs = self.ram_fs.makedir("/var/")
-        for file in os.listdir("../var/"):
-            with subfs.open(file, "w") as mf:
-                with open(f"../var/{file}", "r") as f:
-                    mf.write(f.read())
-        subfs.close()
 
     def login(self, user, passwd):
         with open(f"{self.basefs}/../var/kernel_sets.json", "r") as f:
@@ -133,7 +111,7 @@ class BaseKernel:
         self.fs = OSFS("../")
 
     def exit(self):
-        self.ram_fs.close()
+        self.sctl.end()
         self.fs.close()
         sys.exit()
 
@@ -148,6 +126,7 @@ class BaseKernel:
             pass
     
     def startup(self):
+        debug = self.info['debug']
         self.user = None
         e = 0
         for d in self.info["dependencies"]:
@@ -157,11 +136,36 @@ class BaseKernel:
         if e == 1:
             print(self.lines['kernel']["startup_error_1"])
             self.exit()
+        
+        i = list(self.info.values())
+        i.append(self.modules); i.append(None)
+        i.append(self.lines); i.append(self.fs); i.append("[REMOVED FEATURE]"); i.append(self)
+        
+        self.sctl = SystemCTL()
+        self.sctl.start(f"{self.basefs}/../var/events/", i)
+
+        dcmd = self.json_load("../var/kernel_sets.json")["dynamic_cmd"]
+        if dcmd:
+            self.binaries = load_binaries_dynamic(self.info["shbin"], self.lines['binary'], debug)
+        else:
+            self.binaries = load_binaries(self.info["shbin"], self.lines['binary'], debug)
+
+        i = list(self.info.values())
+        i.append(self.modules); i.append(self.binaries)
+        i.append(self.lines); i.append(self.fs); i.append("[REMOVED FEATURE]"); i.append(self)
+        
         for mod in self.modules:
-            i = list(self.info.values())
-            i.append(self.modules); i.append(self.binaries)
-            i.append(self.lines); i.append(self.fs); i.append(self.ram_fs); i.append(self)
             self.modules[mod].info["on_load"](i)
+            
+        self.sctl = SystemCTL()
+        self.sctl.start(f"{self.basefs}/../var/events/", i)
+
+        dcmd = self.json_load("../var/kernel_sets.json")["dynamic_cmd"]
+        if dcmd:
+            self.binaries = load_binaries_dynamic(self.info["shbin"], self.lines['binary'], debug)
+        else:
+            self.binaries = load_binaries(self.info["shbin"], self.lines['binary'], debug)
+        
         if "plm" in self.modules:
             if self.modules["plm"].info["login-manager"]:
                 self.user = self.modules["plm"].run(i)

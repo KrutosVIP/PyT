@@ -47,8 +47,9 @@ def cmd_exec(self, parse, info, u_i, PTSTD, redirect, STDLib):
                             
         info2 = info.copy(); info2.append(u_i)
         stdlib = STDLib(info2)
-        info[10][parse[0]].info["run"](stdlib, self)
-
+        output = info[10][parse[0]].info["run"](stdlib, self)
+        if type(output) == type(STDLib.Exit):
+            info[14].exit()
         if redir == True:
             try:
                 redirect_write(sys.stdout, file)

@@ -9,10 +9,10 @@ class Relogin(Binary):
     def __init__(self):
         self.info = {
             "name" : "Re-login",
-            "version" : "v1.0.1",
-            "codename": "relogin",
+            "version" : "v2",
+            "codename": ["plm", "relogin"],
             "dependencies" : [], # Not Supported.
-            "description": "Re-login into account.",
+            "description": "Re-login into account using plm.",
             "run": self.run,
             "on_load": self.on_load
         }
@@ -26,8 +26,8 @@ class Relogin(Binary):
 
     def run(self, info, pyt):
         lang = self.json_load("../var/kernel_sets.json")["lang"]
-        if os.path.isfile(f"../lang/relogin_{lang}.json", encoding = "utf-8"):
-            with open(f"../lang/relogin_{lang}.json", "r") as f:
+        if os.path.isfile(f"../lang/relogin_{lang}.json"):
+            with open(f"../lang/relogin_{lang}.json", "r",  encoding = "utf-8") as f:
                 lang = json.load(f)
         else:
             lang = {
@@ -35,14 +35,20 @@ class Relogin(Binary):
                     "error": "Cannot relogin."
                 }
 
+        
         old_user = pyt.info["user"]
         pyt.info["user"] = None
-        pyt.login(info.info)
+        info.info[14].user = None
+    
+        pyt.info["user"] = info.info[14].modules["plm"].run(info.info)
+        if pyt.info["user"] == None:
+            pyt.login(info.info)
         if pyt.info["user"] == None:
             pyt.info["user"] = old_user
             print(lang["error"])
         else:
             print(lang["relogin"].replace("{user}", pyt.info["user"]))
+        info.info[14].user = pyt.info["user"]
         
 
 

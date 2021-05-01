@@ -5,7 +5,12 @@ def dynamic_import(module):
 
 sys.path.insert(0, f"./types")
 from binary import Binary
+from dbinary import DBinary
 from module import Module
+
+def json_load(file):
+    with open(file, "r",  encoding = "utf-8") as f:
+        return json.load(f)
 
 def load_modules(modules, lines_l, debug):
     mods = {}
@@ -24,7 +29,6 @@ def load_modules(modules, lines_l, debug):
             except Exception as e:
                 if debug:
                     print(f"{lines_l['error']} - {type(e).__name__}: {e}")
-                
             m = m.__dict__
             for el in m:
                 try:
@@ -46,6 +50,20 @@ def load_modules(modules, lines_l, debug):
     if debug:
         print(f"{lines_l['success']}")
     return mods
+
+def load_binaries_dynamic(bins, lines_l, debug):
+    binaries = {}
+    if debug:
+        print(f"{lines_l['load']}")
+    files = json_load(os.path.abspath(os.path.dirname(bins)+"/etc/iceberg/dpkg.json"))
+    sys.path.insert(0, f"{bins}")
+    for binary in files:
+        if files[binary] != "__pycache__" and not os.path.isdir(f"{bins}/{files[binary]}"):
+            binaries.update({binary: DBinary(files[binary], binary, Binary)})
+    sys.path.pop(0)
+    if debug:
+        print(f"{lines_l['success']}")
+    return binaries
 
 def load_binaries(bins, lines_l, debug):
     binaries = {}
@@ -107,6 +125,7 @@ def load_binaries(bins, lines_l, debug):
     if debug:
         print(f"{lines_l['success']}")
     return binaries#, help_d
+
 
 
     

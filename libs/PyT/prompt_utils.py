@@ -11,7 +11,7 @@ class InputValidator(Validator):
         text = document.text
         ok = False
         for cmd in self.cmds:
-            if text.startswith(cmd):
+            if text.split(" ")[0] == cmd:
                ok = True
         if not ok:
             num = self.session.output.get_size()[1]

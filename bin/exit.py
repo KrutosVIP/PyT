@@ -21,6 +21,6 @@ class Exit(Binary):
         pass
 
     def run(self, info, pyt):
-        sys.exit()
+        return info.Exit
 
 

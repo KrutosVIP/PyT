@@ -3,7 +3,7 @@
 		"kstart_0": "Starting up PyT2 with kernel",
 		"kstart_0_debug": "Starting up PyT2 in debug mode with kernel",
 		"kstart_1": "with shell",
-		"os_mem_fs_start": "Creating OSFS and MemoryFS...",
+		"os_mem_fs_start": "Creating OSFS...",
 		"load_mod_bin": "Loading modules and binaries...",
 		"startup": "Starting up...",
 		"startup_error_0": "Module %s not found!",
@@ -53,6 +53,22 @@
 		"welcome": "Welcome to PLM, login into to continue.",
 		"login": "Log-in into your account. If your account has no password, don`t type anything in password.\nFirst is a username and second is a password",
 		"yes": "Log-in",
-		"no": "Quit PLM"
+		"no": "Quit PLM",
+		"type_unknown": "Unknown type!"
+	},
+	"systemd": {
+		"load": "Starting events...",
+		"event": "Event:"
+	},
+	"pytconf": {
+		"conf": "PyT Configure",
+		"conf_kernel": "Configure your kernel.",
+		"conf_button": "Configure",
+		"ktext": ["Kernel name and version:", "Kernel Instructions:"],
+		"options": ["Enable Debug", "Custom/Modified Kernel", "Dynamic commands?", "Invisible Password?"],
+		"write": "Write changes to disk?",
+		"plm_conf": "PLM Configure",
+		"plm_graphics": "Configure your PLM and graphics type.",
+		"graphics_options": ["No Graphics", "Normal Mode", "Easy Mode"]
 	}
 }

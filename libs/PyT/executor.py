@@ -12,7 +12,7 @@ def execute(self, file):
         pass
 
 def executable(self, file):
-    if os.path.isdir(file) and os.path.splitext(file)[1] == ".py":
+    if os.path.isfile(file) and os.path.splitext(file)[1] == ".py":
         return file, True
     else:
         if os.path.isfile(os.path.abspath(self.fs[1].replace("\\", "/") + "/" + file.replace("\\", "/"))) and os.path.splitext(file)[1] == ".py":
