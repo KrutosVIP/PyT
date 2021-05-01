@@ -1,0 +1,13 @@
+[CHANGELOG]
+-> 0.0.1 [RC8]:
+	-> Removed RamFS
+	-> PLM Testing ended
+	-> relogin now uses plm
+	-> Improvements in inputs
+	-> PLM Styles
+	-> systemctl early version + New events
+	-> New etc dir with services.
+	-> Dynamic Commands
+	-> get_lines.py also deletes cache
+	-> New exit
+	-> Pyt Configure command. (pytconf)

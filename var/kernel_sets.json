@@ -1,1 +1,27 @@
-{"lang": "en", "autologin": {"active": false, "account": {"name": "root", "password": "root"}}, "accounts": {"root": "root", "user": null}, "account_options": {"root": {"root_acc": true}, "user": {"root_acc": false}}}
+{
+    "dynamic_cmd": true,
+    "lang": "en",
+    "plm": {
+        "plm_type": 1,
+        "invisible": false
+    },
+    "autologin": {
+        "active": false,
+        "account": {
+            "name": "root",
+            "password": "root"
+        }
+    },
+    "accounts": {
+        "root": "root",
+        "user": null
+    },
+    "account_options": {
+        "root": {
+            "root_acc": true
+        },
+        "user": {
+            "root_acc": false
+        }
+    }
+}

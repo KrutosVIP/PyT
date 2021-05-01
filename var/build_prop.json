@@ -1,13 +1,15 @@
-{	
-	"properties": [
-		"PyT-Kernel_21-23_250421_testkeys",
-		"0.0.1-rc7-testing",
-		["pyt2"],
-		"../mod",
-		"pyt2",
-		"../bin",
-		false,
-		false,
-		"pyt2"
-		]
+{
+    "properties": [
+        "PyT-Kernel_16-10_010521_testkeys",
+        "0.0.1-rc8-testing",
+        [
+            "pyt2"
+        ],
+        "../mod",
+        "pyt2",
+        "../bin",
+        false,
+        false,
+        "pyt2"
+    ]
 }
