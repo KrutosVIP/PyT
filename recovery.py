@@ -7,50 +7,106 @@ def unzip_folder(zip_folder, destination):
             zf.extractall(destination)
 def dynamic_import(module):
     return importlib.import_module(module)
+
 class RecoveryKernel:
     def __init__(self):
         self.info = {
-                "name": "PyT-RKernel_17-54_090421_userdebug",
-                "version": "0.0.1rc2",
+                "name": "PyT-RKernel_21-33_200521_userdebug",
+                "version": "0.0.1rc9",
                 "dependencies": None,
                 "module": None,
                 "shell": None,
                 "shbin": None,
                 "debug":  None,
                 "custom": False,
-                "hname": "recoverypyt2"
+                "hname": "recovery-pyt2"
         }
-        self.cwd = os.getcwd()
+        self.uname = {
+            "kname": "PyT-Zen",
+            "version": self.info["version"],
+            "distrotype": "PyT-v2",
+            "name": self.info["name"],
+            "ktype": "PyZen-PyT"
+        }
+
+        self.basefs = os.getcwd()
+        
+        self.ksets = {
+    "expm": False,
+    "danger": False,
+    "autologin": {
+        "active": False,
+        "account": {
+            "name": "root",
+            "password": "root"
+        }
+    },
+    "accounts": {
+        "root": "root"
+    },
+    "account_options": {
+        "root": {
+            "root_acc": True
+        }
+    }
+}
+        self.boot_opt = {"boot": "recovery", "safe_mode": True}
+
         print(f"Starting recovery with kernel {self.info['name']} {self.info['version']}...")
         if self.info["custom"]:
             print("[WARNING] Recovery modified, work at your own risk!")
-        self.ram_fs = MemoryFS()
-        self.fs = OSFS("../")
+
+        if self.ksets["danger"]:
+            print("[WARNING] !!! Kernel/Recovery dangerous/developer functions enabled, don`t except security and stable performance!")
+
+          
+        print(f"Starting with Python {sys.version}")
         self.startup()
         
-    def ramfs_load(self):
-        subfs = self.ram_fs.makedir("/lang/")
-        with subfs.open('global.json', "w") as mf:
-            with open(f"../lang/global_{self.lang}.json", "r") as f:
-                mf.write(f.read())
-        subfs.close()
-        subfs = self.ram_fs.makedir("/var/")
-        for file in os.listdir("../var/"):
-            with subfs.open(file, "w") as mf:
-                with open(f"../var/{file}", "r") as f:
-                    mf.write(f.read())
-        subfs.close()
+
+    def login(self, user, passwd):
+        accs = self.ksets["accounts"]
+        if user in accs:
+            if accs[user] == None:
+                self.user = user
+                return user       
+        if not user in accs:
+            self.user = None
+            return None
+        else:
+            if accs[user] != passwd:
+                self.user = None
+                return None
+            elif accs[user] == passwd:
+                self.user = user
+                return user
 
     def json_load(self, file):
-        with open(file, "r") as f:
+        with open(file, "r", encoding = "utf-8") as f:
             return json.load(f)
 
+    def close(self):
+        return
     def exit(self):
-        self.ram_fs.close()
-        self.fs.close()
+        self.close()
         sys.exit()
 
+    def panic(self, reason):
+        print("!!!KERNEL PANIC!!!" + "\n" + "[EMERGENCY]", reason)
+        if self.info["custom"]:
+            print("!!! [WARNING] Kernel modified, don`t send report! !!!",)
+        try:
+            while True:
+                pass
+        except KeyboardInterrupt:
+            pass
+    
     def startup(self):
+        self.user = "root"
+        
+        i = list(self.info.values())
+        i.append(self)
+
         print("[INFO] Starting Recovery Terminal")
         EXIT = False
         cc = cmds()
