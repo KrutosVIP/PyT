@@ -12,12 +12,9 @@ class HelloWorld(Binary):
             "version" : "v1.0.0",
             "codename": "pkg",
             "dependencies" : [], # Not Supported.
-            "run": self.run,
-            "on_load": self.startup
+            "run": self.run
         }
 
-    def startup(self, info):
-        pass
 
     def run(self, info, pyt):
         print("Hello World!")

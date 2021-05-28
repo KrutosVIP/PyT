@@ -1,4 +1,6 @@
 #redirector function
+import os, sys
+from slugify import slugify
 def redirect(command):
         args = command.split(" ")[1:]
         if len(args) > 1:

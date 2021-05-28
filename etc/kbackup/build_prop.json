@@ -1,0 +1,15 @@
+{
+    "properties": [
+        "PyT-Kernel_20-53_230521_debugkeys",
+        "0.0.1-rc9-stable",
+        [
+            "pyt2"
+        ],
+        "../mod",
+        "pyt2",
+        "../bin",
+        true,
+        true,
+        "pyt2"
+    ]
+}

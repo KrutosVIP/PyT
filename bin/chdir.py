@@ -15,12 +15,8 @@ class chdir(Binary):
             "codename": "cd",
             "dependencies" : [], # Not Supported.
             "description": "Change working directory",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-
-    def on_load(self, info):
-        pass
 
     def json_load(self, file):
         with open(file, "r") as f:

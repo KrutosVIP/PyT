@@ -14,8 +14,7 @@ class Clear(Binary):
             "version" : "v1",
             "codename": ["clear", "cls"],
             "dependencies" : [], # Not Supported.
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
 
     def on_load(self, info):

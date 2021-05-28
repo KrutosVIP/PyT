@@ -13,14 +13,13 @@ class Kpanic(Binary):
             "codename": "kpanic",
             "dependencies" : [], # Not Supported.
             "description": "Devtool for creating kpanic",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
 
-    def on_load(self, info):
-        pass
-
     def run(self, info, pyt):
-        info.info[14].panic("Not syncing!")
+        if not info.info[14].ksets["danger"]: return print("No-safety option disabled.")
+        kpanic = "Not syncing!"
+        if len(info.info[15].split(" ")[1:]) > 1: kpanic = info.info[15].split(" ")[1:]
+        info.info[14].panic(kpanic)
 
 

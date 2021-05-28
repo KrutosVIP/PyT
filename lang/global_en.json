@@ -10,6 +10,9 @@
 		"startup_error_1": "Aborting startup...",
 		"interpretator": "Starting with Python",
 		"kernel_mod": "[WARNING] Kernel modified, work at your own risk!",
+		"kernel_expm": "[INFO] Kernel experimental features enabled",
+		"kernel_danger": "[WARNING] !!! Kernel/PyT dangerous/developer functions enabled, don`t except security and stable performance!",
+		"kernel_safe": "[SAFE MODE] Kernel running in safe mode. Modifying kernel options to safely run. (Old configs will be copied to /etc/)\n[WARNING] All modifications to boot.json, kernel_sets.json and build_prop.json in this session will be deleted.",
 		"kpanic": "!!!KERNEL PANIC!!!",
 		"kpanic_1": "[EMERGENCY]"
 	},
@@ -65,7 +68,7 @@
 		"conf_kernel": "Configure your kernel.",
 		"conf_button": "Configure",
 		"ktext": ["Kernel name and version:", "Kernel Instructions:"],
-		"options": ["Enable Debug", "Custom/Modified Kernel", "Dynamic commands?", "Invisible Password?"],
+		"options": ["Enable Debug", "Custom/Modified Kernel", "Dynamic commands?", "Invisible Password?", "Experimental features", "[UNSTABLE] No-safety option.", "Validate input?", "[DISABLE VALIDATE] Execute shell commands"],
 		"write": "Write changes to disk?",
 		"plm_conf": "PLM Configure",
 		"plm_graphics": "Configure your PLM and graphics type.",

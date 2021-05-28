@@ -1,4 +1,4 @@
 {
-                    "no_file": "[Error] Unknown file.",
+                    "no_dir": "[Error] Unknown dir.",
                     "sysfs_err": "[Warning] SysFS not supported now."
 }

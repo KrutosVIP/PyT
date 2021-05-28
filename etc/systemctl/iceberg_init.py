@@ -14,7 +14,11 @@ class Iceberg_init:
     def index(i, basedir):
         binaries = {}
         bins = i[14].info["shbin"]
-        files = os.listdir(bins)
+        try:
+            files = os.listdir(bins)
+        except:
+            files = os.listdir(f"{basedir}/../bin")
+            bins = f"{basedir}/../bin"
         sys.path.insert(0, f"{bins}")
 
         for binary in files:

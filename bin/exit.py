@@ -13,12 +13,8 @@ class Exit(Binary):
             "codename": ["exit", "poweroff"],
             "dependencies" : [], # Not Supported.
             "description": "Exit command.",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         return info.Exit

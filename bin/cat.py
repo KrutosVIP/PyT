@@ -13,8 +13,7 @@ class cat(Binary):
             "codename": "cat",
             "dependencies" : [], # Not Supported.
             "description": "Cat file",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
 
     def on_load(self, info):

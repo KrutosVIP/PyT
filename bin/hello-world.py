@@ -12,12 +12,8 @@ class HelloWorld(Binary):
             "version" : "v1.1.0",
             "codename": "helloworld",
             "dependencies" : [], # Not Supported.
-            "run": self.run,
-            "on_load": self.startup
+            "run": self.run
         }
-
-    def startup(self, info):
-        print("Hello World Program Loaded!")
 
     def run(self, info, pyt):
         print("Hello World!")

@@ -13,12 +13,8 @@ class Pwd(Binary):
             "codename": "pwd",
             "dependencies" : [], # Not Supported.
             "description": "Get working directory",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         print(pyt.fs[1])

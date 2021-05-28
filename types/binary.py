@@ -5,12 +5,9 @@ class Binary(object):
             "version" : "undefined",
             "codename": "undefined",
             "dependencies" : [],
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
     
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         pass

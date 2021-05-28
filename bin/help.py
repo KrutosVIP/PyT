@@ -13,16 +13,13 @@ class Help(Binary):
             "codename": ["help", "man"],
             "dependencies" : [], # Not Supported.
             "description": "help - Args - command name",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
     
     def json_load(self, file):
         with open(file, "r") as f:
             return json.load(f)
 
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         lang = self.json_load("../var/kernel_sets.json")["lang"]

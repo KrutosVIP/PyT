@@ -12,12 +12,8 @@ class ChangeLang(Binary):
             "version" : "v1.0.0",
             "codename": ["changelang", "chlang", "locale"],
             "dependencies" : [], # Not Supported.
-            "run": self.run,
-            "on_load": self.startup
+            "run": self.run
         }
-
-    def startup(self, info):
-        pass
 
     def json_load(self, file):
         with open(file, "r", encoding = "utf-8") as f:

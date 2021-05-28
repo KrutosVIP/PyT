@@ -161,13 +161,9 @@ class Encode(Binary):
             "codename": "encode",
             "dependencies" : [], # Not Supported.
             "description": "Encode to DAE v2.",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
     
-
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         dae = dae2()
@@ -187,13 +183,8 @@ class Decode(Binary):
             "codename": "decode",
             "dependencies" : [], # Not Supported.
             "description": "Decode to DAE v2.",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-    
-
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         dae = dae2()

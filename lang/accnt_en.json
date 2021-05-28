@@ -1,0 +1,42 @@
+{
+    "accmenu": "Select account | AccountMenu",
+    "accmenu2": "Check account | AccountMenu",
+    "accmenu3": "Change password | AccountMenu",
+    "accm_accounts": "Accounts:",
+    "accm_acc": "Account {acc}:",
+    "no_root": "[Error] No root.",
+    "chpass": "Change password",
+    "chroot": "Root account?",
+    "chname": "Change account name",
+    "delete": "Delete account.",
+    "chpass2": "Change password. The second input is for verifying, type your new password two times.",
+    "ok_chpass": "Change",
+    "no_chpass": "No change.",
+    "pswd_none": "No password",
+    "chpass_err": "First password is not matching the second.",
+
+    "chname_t": "Change name of account.",
+    "chname_err": "Cannot change account name to name of existing account.",
+    "ok": "OK",
+    "cancel": "Cancel",
+
+    "chroot_2": "Want to root your account?",
+    "root": "Root",
+    "chroot_err": "There is only this account with root!",
+    "chroot_err2": "This account is already rooted!",
+    
+    "delete_text": "Do you want to delete your account?",
+    "yes": "Yes",
+    "no": "No",
+    "delete_err": "Can`t delete active account.",
+    "delete_err1": "You have only one account.",
+
+    "create": "[Create new account...]",
+    "create2": "Create account",
+    "create_text": "Welcome to account creator. This input under text is your nickname.",
+    "create_root": "Your account will be rooted?",
+    "create_root2": "Root",
+    "create_pswd": "Input password in first input and repeat it in second. Type 'null' in first text field to set password to none and press Cancel.",
+    "create_error1": "Account exists!",
+    "create_error2": "You cannot create root-account without root on your account!"
+}

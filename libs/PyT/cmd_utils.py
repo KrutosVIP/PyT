@@ -1,7 +1,9 @@
-import sys, os, json
-def file_exec(self, redirect, PTSTD, u_i, execute, executable, parse):
+import sys, os, json, traceback
+
+def file_exec(self, redirect, PTSTD, u_i, execute, shexecute, executable, shexecutable, parse):
     # Check if file executable
     file_exc, execute_var = executable(self, parse[0])
+    file_exc2, execute_var2 = shexecutable(self, parse[0])
     # Check if we redirecting
     redir, file, args = redirect(u_i)
     # If exec
@@ -25,9 +27,30 @@ def file_exec(self, redirect, PTSTD, u_i, execute, executable, parse):
             except Exception as e:
                 traceback.print_exc()
         return True, sys.stdout
+
+    if execute_var2:
+        # Check if redirecting
+        if redir == True:
+            # Writing all STD to our STD
+            sys.stdout = PTSTD()
+        # Execute file
+        shexecute(self, file_exc2)
+
+        # End redirect
+        if redir == True:
+            try:
+                # Redirecting given output
+                redirect_write(sys.stdout, file)
+                # Recreating std.
+                std2 = sys.stdout
+                sys.stdout = std2.basesys
+                return True, sys.stdout
+            except Exception as e:
+                traceback.print_exc()
+        return True, sys.stdout
     return False, sys.stdout
 
-def cmd_exec(self, parse, info, u_i, PTSTD, redirect, STDLib):
+def cmd_exec(self, parse, info, u_i, PTSTD, redirect, redirect_write, STDLib):
     if parse[0] in info[10]:
         redir, file, args = redirect(u_i) 
         if redir == True:
@@ -52,7 +75,7 @@ def cmd_exec(self, parse, info, u_i, PTSTD, redirect, STDLib):
             info[14].exit()
         if redir == True:
             try:
-                redirect_write(sys.stdout, file)
+                redirect_write(sys.stdout, os.path.abspath(self.fs[1] + "/" + file))
                 std2 = sys.stdout
                 sys.stdout = std2.basesys
                 del std2

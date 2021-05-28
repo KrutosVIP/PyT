@@ -13,19 +13,16 @@ class listdir(Binary):
             "codename": "ls",
             "dependencies" : [], # Not Supported.
             "description": "List files in dir",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
 
         self.types = {
                 "dir": f"{Back.BLACK}{Fore.GREEN}",
                 ".gz": f"{Fore.LIGHTRED_EX}",
                 ".py": f"{Fore.LIGHTGREEN_EX}",
-                ".png": f"{Fore.CYAN}"
+                ".png": f"{Fore.CYAN}",
+                ".sh": f"{Fore.RED}"
             }
-
-    def on_load(self, info):
-        pass
 
     def json_load(self, file):
         with open(file, "r",  encoding = "utf-8") as f:

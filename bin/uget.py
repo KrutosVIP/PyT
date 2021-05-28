@@ -13,12 +13,8 @@ class UGet(Binary):
             "version" : "v1.1.1",
             "codename": "uget",
             "dependencies" : [], # Not Supported.
-            "run": self.run,
-            "on_load": self.load
+            "run": self.run
         }
-
-    def load(self, info):
-        pass
 
     def run(self, info, pyt):
         args = info.info[15].split(" ")[1:]
@@ -26,15 +22,16 @@ class UGet(Binary):
         print("Downloading file from " + args[0])
         url = args[0]
         path = args[1]
+        path = os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + path.replace("\\", "/") ).replace("//", "/")
         r = requests.get(url, stream=True)
         if "content-length" in r.headers:
             size = r.headers["content-length"]
         else:
             size = False
         if size:
-            p = Bar(f'{path}>', max=int(size), fill = "#", suffix='%(percent)d%%')
+            p = Bar(f'{args[1]}>', max=int(size), fill = "#", suffix='%(percent)d%%')
         else:
-            p = Spinner(f'### {path}')
+            p = Spinner(f'{args[1]}>')
             
         with open(path, 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024*50):

@@ -13,12 +13,8 @@ class UName(Binary):
             "codename": "uname",
             "dependencies" : [], # Not Supported.
             "description": "Get uname",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         sets = info.info[14].uname

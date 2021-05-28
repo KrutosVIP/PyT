@@ -1,4 +1,5 @@
 import sys, json, os, traceback, importlib, datetime
+import subprocess, chardet
 
 def dynamic_import(module):
     return importlib.import_module(module)
@@ -21,7 +22,7 @@ from PyT.redirectors import redirect, redirect_write
 from PyT.STD import STDLib
 from PyT.startup_utils import pytrc, welcome_text
 from PyT.cmd_utils import file_exec, cmd_exec
-from PyT.executor import execute, executable
+from PyT.executor import execute, executable, shexecute, shexecutable
 
 from module import Module
 from cpkg import fargparse
@@ -42,16 +43,12 @@ class PyT2(Module):
         self.session = PromptSession()
         
 
-
     def json_load(self, file):
         with open(file, "r") as f:
             return json.load(f)
 
     def on_load(self, info):
         self.kinfo = info
-        self.error = 0
-        for mod in info[10]:
-            info[10][mod].info["on_load"](info)
         cinit()
         
     def color(self, text):
@@ -102,9 +99,72 @@ class PyT2(Module):
             if self.info["user"] == None:
                 print(info[11]["pyt"]["login"]["auto_invalid"])
 
+    def system(self, u_i):
+            info = self.info_temp
+            try:
+                if not os.path.isdir(os.path.abspath(info[14].basefs + "/../data/")):
+                    os.mkdir(os.path.abspath(info[14].basefs + "/../data/"))
+                if not os.path.isdir(os.path.abspath(info[14].basefs + "/../data/" + self.info["user"])):
+                    os.mkdir(os.path.abspath(info[14].basefs + "/../data/" + self.info["user"]))
+                                  
+                if len(self.fs[1]) > 40:
+                    self.tempfs = "..." + self.fs[1][len(self.fs[1])-40:]
+                else:
+                    self.tempfs = self.fs[1]
+                if info[14].ksets["danger"]:
+                    self.accs_o[self.info["user"]]["root_acc"] = True
+                if len(u_i.split("||")) > 1:
+                    for u_i2 in u_i.split("||"):
+                        parse = u_i2.split(" ")
+                        if parse[0] == "":
+                            del parse[0]
+                        u_i2 = " ".join(parse)
+                        self.fs[1] = self.fs[1].replace("//", "/")
+                        try:
+                            cmd_exc_temp = cmd_exec(self, parse, info, u_i, PTSTD, redirect, redirect_write, STDLib)
+                            if not cmd_exc_temp:
+                                redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i2, execute, shexecute, executable, shexecutable, parse) 
+                                if redir:
+                                    pass
+                                elif not u_i.isspace() and not u_i == "":
+                                    if info[14].ksets["use_ossystem"]:
+                                        process = subprocess.Popen(u_i, stdout=subprocess.PIPE, shell=True)
+                                        output, error = process.communicate()
+                                        result_code = chardet.detect(output)
+                                        print(output.decode(result_code["encoding"]))
+                                    else:
+                                        print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+                        # Get command/file exception
+                        except Exception as e:
+                            traceback.print_exc()
 
+                else:                    
+                    parse = u_i.split(" ")
+                    self.fs[1] = self.fs[1].replace("//", "/")
+                    try:
+                        cmd_exc_temp = cmd_exec(self, parse, info, u_i, PTSTD, redirect, redirect_write, STDLib)
+                        if not cmd_exc_temp:
+                            redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i, execute, shexecute, executable, shexecutable, parse) 
+                            if redir:
+                                pass
+                            elif not u_i.isspace() and not u_i == "":
+                                if info[14].ksets["use_ossystem"]:
+                                    process = subprocess.Popen(u_i, stdout=subprocess.PIPE, shell=True)
+                                    output, error = process.communicate()
+                                    result_code = chardet.detect(output)
+                                    print(output.decode(result_code["encoding"]))
+                                else:
+                                    print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+                            
+                    # Get command/file exception
+                    except Exception as e:
+                        traceback.print_exc()
+            except Exception as e:
+                traceback.print_exc()
+
+                
     def run(self, info):
-        self.fs_type = {"extfs": os.getcwd(), "sysfs": "/"}
+        self.fs_type = {"extfs": os.path.abspath(os.getcwd()+"/../"), "sysfs": "/"}
         self.fs = ["extfs", self.fs_type["extfs"]]
 
         welcome_text(info, self, Style)
@@ -113,6 +173,7 @@ class PyT2(Module):
 
         with open(f"{info[14].basefs}/../var/kernel_sets.json", "r") as f:
             d = f.read()
+            self.validate = json.loads(d)["validate"]
             accs = json.loads(d)["accounts"]
             accs_o = json.loads(d)["account_options"]
             self.accs = accs
@@ -130,26 +191,51 @@ class PyT2(Module):
         
         while session:
             try:
+                accs = self.accs
+                accs_o = self.accs_o 
                 if len(self.fs[1]) > 40:
                     self.tempfs = "..." + self.fs[1][len(self.fs[1])-40:]
                 else:
                     self.tempfs = self.fs[1]
-
+                if info[14].ksets["danger"]:
+                    accs_o[self.info["user"]]["root_acc"] = True
                 u_i = InputMethod(self, accs_o[self.info["user"]]["root_acc"], PStyle, info)     
                 parse = u_i.split(" ")
                 self.fs[1] = self.fs[1].replace("//", "/")
-                try:
-                    cmd_exc_temp = cmd_exec(self, parse, info, u_i, PTSTD, redirect, STDLib)
-                    if not cmd_exc_temp:
-                        redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i, execute, executable, parse) 
-                        if redir:
-                            pass
-                        elif not u_i.isspace() and not u_i == "":
-                            print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+                self.info_temp = info
+                self.system(u_i)
+                """
+                if len(u_i.split("||")) > 1:
+                    for u_i2 in u_i.split("||"):
+                        parse = u_i2.split(" ")
+                        if parse[0] == "":
+                            del parse[0]
+                        u_i2 = " ".join(parse)
+                        self.fs[1] = self.fs[1].replace("//", "/")
+                        try:
+                            cmd_exc_temp = cmd_exec(self, parse, info, u_i2, PTSTD, redirect, redirect_write,  STDLib)
+                            if not cmd_exc_temp:
+                                redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i2, execute, executable, parse) 
+                                if redir:
+                                    pass
+                                elif not u_i.isspace() and not u_i == "":
+                                    print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
+                        # Get command/file exception
+                        except Exception as e:
+                            traceback.print_exc()
+                else:
+                    try:
+                        cmd_exc_temp = cmd_exec(self, parse, info, u_i, PTSTD, redirect, redirect_write, STDLib)
+                        if not cmd_exc_temp:
+                            redir, sys.stdout = file_exec(self, redirect, PTSTD, u_i, execute, executable, parse) 
+                            if redir:
+                                pass
+                            elif not u_i.isspace() and not u_i == "":
+                                print(info[11]['pyt']['invalid_command'].replace("{cmd}", parse[0]))
                             
-                # Get command/file exception
-                except Exception as e:
-                    traceback.print_exc()
+                    # Get command/file exception
+                    except Exception as e:
+                        traceback.print_exc()"""
                     
             # Get all keyboard interrupts
             except KeyboardInterrupt:

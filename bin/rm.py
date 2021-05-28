@@ -16,12 +16,8 @@ class remove(Binary):
             "codename": "rm",
             "dependencies" : [], # Not Supported.
             "description": "Remove some files",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-
-    def on_load(self, info):
-        pass
 
     def json_load(self, file):
         with open(file, "r",  encoding = "utf-8") as f:

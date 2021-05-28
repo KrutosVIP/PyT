@@ -1,4 +1,5 @@
 {
+    "accmenu": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\accmenu.py",
     "cat": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\cat.py",
     "changelang": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\changelang.py",
     "chlang": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\changelang.py",
@@ -8,10 +9,10 @@
     "clear": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\clear.py",
     "cls": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\clear.py",
     "pwd": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\cwd.py",
-    "dialog": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\dialog.py",
     "echo": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\echo.py",
     "encode": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\encodedecode.py",
     "decode": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\encodedecode.py",
+    "eval": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\eval.py",
     "exit": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\exit.py",
     "poweroff": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\exit.py",
     "grep": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\grep.py",
@@ -23,14 +24,17 @@
     "ls": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\listdir.py",
     "mkdir": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\mkdir.py",
     "pkg": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\pkg.py",
-    "pkg-build": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\pkgbuild.py",
     "pytconf": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\pytconf.py",
     "reboot": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\reboot.py",
     "plm": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\relogin.py",
     "relogin": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\relogin.py",
     "rm": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\rm.py",
     "rmdir": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\rmdir.py",
+    "amirooted": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\rooted.py",
+    "rooted": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\rooted.py",
+    "sh": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\sh.py",
     "touch": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\touch.py",
     "uget": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\uget.py",
-    "uname": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\uname.py"
+    "uname": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\uname.py",
+    "whoami": "C:\\Users\\Home\\Desktop\\PyT-2\\PyT\\bin\\whoami.py"
 }

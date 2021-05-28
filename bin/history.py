@@ -14,17 +14,12 @@ class History(Binary):
             "codename": "history",
             "dependencies" : [], # Not Supported.
             "description": "Get commands history",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
-    
     
     def json_load(self, file):
         with open(file, "r", encoding = "utf-8") as f:
             return json.load(f)
-        
-    def on_load(self, info):
-        pass
 
     def run(self, info, pyt):
         lang = self.json_load(f"{info.info[14].basefs}/../var/kernel_sets.json")["lang"]

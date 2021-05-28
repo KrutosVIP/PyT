@@ -16,16 +16,12 @@ class PyTconf(Binary):
             "codename": "pytconf",
             "dependencies" : [], # Not Supported.
             "description": "PyT Configure",
-            "run": self.run,
-            "on_load": self.on_load
+            "run": self.run
         }
     
     def json_load(self, file):
         with open(file, "r", encoding="utf-8") as f:
             return json.load(f)
-
-    def on_load(self, info):
-        pass
 
     def json_write(self, file, text):
         with open(file, "w", encoding="utf-8") as f:
@@ -61,6 +57,27 @@ class PyTconf(Binary):
             ksets["dynamic_cmd"] = True
         else:
             ksets["dynamic_cmd"] = False
+
+        if "expm" in kconf[2]:
+            ksets["expm"] = True
+        else:
+            ksets["expm"] = False
+
+        if "danger" in kconf[2]:
+            ksets["danger"] = True
+        else:
+            ksets["danger"] = False
+
+        if "validate" in kconf[2]:
+            ksets["validate"] = True
+        else:
+            ksets["validate"] = False
+
+        if "use_ossystem" in kconf[2]:
+            ksets["use_ossystem"] = True
+        else:
+            ksets["use_ossystem"] = False
+
         self.json_write(f"{info.info[14].basefs}/../var/kernel_sets.json", ksets)
         
     def run(self, info, pyt):
@@ -77,7 +94,11 @@ class PyTconf(Binary):
             values2 = [info.info[14].info["name"], info.info[14].info["version"]],
             values=[        ("debug", lang["pytconf"]["options"][0]),
                 ("custom", lang["pytconf"]["options"][1]),
-                ("dynamic", lang["pytconf"]["options"][2])
+                ("danger", lang["pytconf"]["options"][5]),
+                ("expm", lang["pytconf"]["options"][4]),
+                ("dynamic", lang["pytconf"]["options"][2]),
+                ("validate", lang["pytconf"]["options"][6]),
+                ("use_ossystem", lang["pytconf"]["options"][7])
             ]
         ).run()
         if kernel_conf != None:

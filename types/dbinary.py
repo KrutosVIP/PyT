@@ -1,4 +1,4 @@
-import sys, os, json, importlib
+import sys, os, json, importlib, shutil, gc
 
 
 def dynamic_import(mod):
@@ -14,11 +14,13 @@ class DBinary(object):
             "version" : "undefined",
             "codename": name,
             "dependencies" : [],
-            "run": self.run,
-            "on_load" : self.on_load
+            "run": self.run
         }
         self.binary = Binary
         self.get_info()
+
+    def refresh(self):
+        gc.collect()
 
     def get_info(self):
         file_exc, execute_var = self.executable(self.info["file"])
@@ -36,31 +38,24 @@ class DBinary(object):
         else:
             return
         pass
-    def on_load(self, info):
-        file_exc, execute_var = self.executable(self.info["file"])
-        if execute_var:
-            try:
-                sys.path.append(os.path.dirname(self.info["file"]))
-                m = dynamic_import(os.path.basename(self.info["file"]))
-                m = self.get_class(m)
-                m.info["on_load"](info)
-                return sys.path.pop()
-            except ModuleNotFoundError:
-                pass
-        else:
-            return
-        pass
 
     def run(self, info, pyt):
         file_exc, execute_var = self.executable(self.info["file"])
         if execute_var:
             try:
                 sys.path.append(os.path.dirname(self.info["file"]))
+                self.refresh()
                 m = dynamic_import(os.path.basename(self.info["file"]))
+                try:
+                    importlib.reload(m)
+                except:
+                    pass
                 m = self.get_class(m)
-                info = m.info["run"](info, pyt)
+                info2 = m.info["run"](info, pyt)
+                del sys.modules[os.path.basename(self.info["file"])[:-3]]
+                del m
                 sys.path.pop()
-                return info
+                return info2
             except ModuleNotFoundError:
                 pass
         else:

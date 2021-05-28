@@ -216,23 +216,3 @@ def plmconf(
     )
 
     return _create_app(dialog, style)
-
-
-results_array = pytconf(
-    title="PyT Configure",
-    text="Configure your kernel.",
-    ok_text = "Configure", 
-    text2 = ["Kernel name and version:", "Kernel Instructions:"],
-    values2 = ["PyT-Kernel_21-23_250421_testkeys", "0.0.1-rc7-testing"],
-    values=[        ("debug", "Enable Debug"),
-        ("custom", "Custom/Modified Kernel"),
-        ("dynamic", "Dynamic commands?")
-    ]
-)#.run()
-r_array2 = plmconf(
-    title="PLM Configure",
-    text="Configure your PLM and graphics type.",
-    ok_text = "Configure",
-    values = [ ("invisible", "Invisible Password?")],
-    values2 = [(0, "No Graphics"), (1, "Normal Mode"), (2, "Easy Mode")]
-) #.run()

@@ -1,6 +1,10 @@
 {
     "dynamic_cmd": true,
     "lang": "en",
+    "danger": false,
+    "expm": true,
+    "validate": true,
+    "use_ossystem": false,
     "plm": {
         "plm_type": 1,
         "invisible": false
