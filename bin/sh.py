@@ -107,9 +107,9 @@ from colorama import Back, Fore, Style
 from colorama import init as cinit
 sys.path.insert(0, "../types")
 cinit()
-from binary import Binary
-#class Binary:
-#    pass
+#from binary import Binary
+class Binary:
+    pass
 class sh(Binary):
     def __init__(self):
         self.info = {
