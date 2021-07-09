@@ -31,3 +31,4 @@
 	-> dynamic commands improvements, now, if you change some code in module, you can execute a new version without reboot
 	-> DELETED Binary.on_load()
 	-> Accmenu
+	-> Added free command.

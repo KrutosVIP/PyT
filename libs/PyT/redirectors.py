@@ -16,4 +16,4 @@ def redirect(command):
 # Redirector write
 def redirect_write(stdout, file):
     with open(file, "w", encoding = "utf-8") as f:
-            f.write("".join(stdout.stdout).replace("\n", ""))
+            f.write("\n".join(stdout.stdout))

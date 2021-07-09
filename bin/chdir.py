@@ -42,8 +42,11 @@ class chdir(Binary):
 #            print(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/")))
             if os.path.isdir(os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))):
                 pyt.fs[1] = os.path.abspath(pyt.fs[1].replace("\\", "/") + "/" + args.replace("\\", "/"))
+            elif os.path.isdir(os.path.abspath(args.replace("\\", "/"))):
+                pyt.fs[1] = os.path.abspath(args.replace("\\", "/"))
             else:
                 print(lang["no_dir"])
+            
 #            if os.path.isdir(os.path.abspath(args)):
 #                pyt.fs[1] = os.path.abspath(args)
 #            else:

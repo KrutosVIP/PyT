@@ -64,7 +64,7 @@ def cmd_exec(self, parse, info, u_i, PTSTD, redirect, redirect_write, STDLib):
         else:
             history = {"history": []}
 
-        history["history"].append({parse[0]: "".join(parse[1:])})
+        history["history"].append({parse[0]: " ".join(parse[1:])})
         with open(f"{info[14].basefs}/../data/{self.info['user']}/.history", "w") as f:
             history = json.dump(history, f)
                             
