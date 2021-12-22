@@ -11,7 +11,7 @@ def dynamic_import(module):
 class RecoveryKernel:
     def __init__(self):
         self.info = {
-                "name": "PyT-RKernel_21-33_200521_userdebug",
+                "name": "PyT-RKernel_20-33_221221_userdebug",
                 "version": "0.0.1rc9",
                 "dependencies": None,
                 "module": None,
@@ -24,7 +24,7 @@ class RecoveryKernel:
         self.uname = {
             "kname": "PyT-Zen",
             "version": self.info["version"],
-            "distrotype": "PyT-v2",
+            "distrotype": "PyT-Recovery",
             "name": self.info["name"],
             "ktype": "PyZen-PyT"
         }
@@ -32,24 +32,24 @@ class RecoveryKernel:
         self.basefs = os.getcwd()
         
         self.ksets = {
-    "expm": False,
-    "danger": False,
-    "autologin": {
-        "active": False,
-        "account": {
-            "name": "root",
-            "password": "root"
-        }
-    },
-    "accounts": {
-        "root": "root"
-    },
-    "account_options": {
-        "root": {
-            "root_acc": True
-        }
-    }
-}
+                "expm": False,
+                "danger": False,
+                "autologin": {
+                    "active": False,
+                    "account": {
+                        "name": "root",
+                        "password": "root"
+                    }
+                },
+                "accounts": {
+                    "root": "root"
+                },
+                "account_options": {
+                    "root": {
+                        "root_acc": True
+                    }
+                }
+            }
         self.boot_opt = {"boot": "recovery", "safe_mode": True}
 
         print(f"Starting recovery with kernel {self.info['name']} {self.info['version']}...")
@@ -60,8 +60,7 @@ class RecoveryKernel:
             print("[WARNING] !!! Kernel/Recovery dangerous/developer functions enabled, don`t except security and stable performance!")
 
           
-        print(f"Starting with Python {sys.version}")
-        self.startup()
+
         
 
     def login(self, user, passwd):
@@ -117,7 +116,7 @@ class RecoveryKernel:
                 try:
                     parse = u_i.split(" ")
                     if parse[0] in cc.cmds:
-                        cc.cmds[parse[0]](parse)
+                        cc.cmds[parse[0]](parse, self)
                     else:
                         if not u_i.isspace() and not u_i == "":
                             print("[INFO] Unknown command {cmd}".replace("{cmd}", parse[0]))
@@ -128,15 +127,23 @@ class RecoveryKernel:
             
 class cmds:
     def __init__(self):
-        self.cmds = {"update": self.update, "help": self.help, "off": self.off, "chdir": self.chdir, "dir": self.listdir}
-        self.help = {"update": "Use update.zip as update.", "help": "Show this message.", "off": "Turn off recovery.", "chdir": "Change dir", "dir": "List directory"}
+        self.cmds = {"update": self.update, "help": self.help, "off": self.off, "chdir": self.chdir, "dir": self.listdir, "uname": self.uname, "ls": self.listdir, "changelog": self.changelog}
+        self.help = {"update": "Use update.zip as update.", "help": "Show this message.", "off": "Turn off recovery.", "chdir": "Change dir", "dir": "List directory", "ls": "List directory", "uname": "Get Unix Name", "changelog": "Get Recovery changelog."}
+        self.chlog = [
+"> Changelog 22.12.21 Experimental:",
+"> Implemented uname, changelog.",
+"> Dir got alias to ls",
+"> update command fixed.",
+"> Recovery can start up on Normal Kernel",
+"> Also some kernel patches"
+        ]
 
-    def chdir(self, args):
+    def chdir(self, args, kernel):
         chdir = "".join(args[1:])
         if os.path.isdir(chdir):
             os.chdir(chdir)
 
-    def listdir(self, args):
+    def listdir(self, args, kernel):
         d = {}
         ldir = "".join(args[1:])
         if not os.path.isdir(ldir):
@@ -151,7 +158,7 @@ class cmds:
                 print(f"{filedir} - File")
             
                 
-    def update(self, args):
+    def update(self, args, kernel):
         print("[INFO] Trying to find update.zip...")
         try:
             if os.path.isdir("./temp"):
@@ -166,20 +173,28 @@ class cmds:
                     script.run()
                 except Exception as e:
                     print(f"[ERROR] - {type(e).__name__}: {e} - Broken package, aborting...")
-                    shutil.rmtree("./temp")
                 shutil.rmtree("./temp")
             else:
                 print("[INFO] Nothing to extract, aborting.")
         except Exception as e:
             print(f"[ERROR] - {type(e).__name__}: {e} - Broken package, aborting...")
             
-    def help(self, args):
+    def help(self, args, kernel):
         print("Commands:")
         for cmd in self.help:
             print(f"> {cmd}: {self.help[cmd]}")
             
-    def off(self, args):
+    def off(self, args, kernel):
         sys.exit()
 
+    def uname(self, args, kernel):
+        sets = kernel.uname
+        print(" ".join(list(sets.values())))
+
+    def changelog(self, args, kernel):
+        print("\n".join(self.chlog))
+
 def run():
-    d = RecoveryKernel()
+    kernel = RecoveryKernel()
+    print(f"Starting with Python {sys.version}")
+    kernel.startup()

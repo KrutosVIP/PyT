@@ -1,7 +1,8 @@
-import os, shutil
+import os, shutil, sys
 path ="."
 filelist = []
 d = 0
+
 for root, dirs, files in os.walk(path):
     for file in files:
         if os.path.splitext(file)[1] == ".py" or os.path.splitext(file)[1] == ".json":

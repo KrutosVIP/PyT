@@ -1,51 +1,85 @@
 import json, os, sys, importlib
 
 
-def dynamic_import(module):
+def dynamic_import(module): # Function to import modules
     return importlib.import_module(module)
 
-def main():
-    if os.path.isfile("./var/build_prop.json"):
-        with open("./var/build_prop.json", "r") as f:
-            d = json.load(f)
-    if os.path.isfile("./var/boot.json"):
-        with open("./var/boot.json", "r") as f:
-            b = json.load(f)["boot"]
-            if b == "recovery":
-                try:
-                    r = dynamic_import("recovery")
-                except:
-                    print("Emergency: No recovery!!!")
-                else:
-                    r.run()
-                    sys.exit()
-            elif b == "os":
+def json_load(file):
+    with open(file, "r", encoding = "utf-8") as f:
+        return json.load(f)
+
+def main() -> None:
+    if os.path.isfile("./var/boot.json"): # Check if boot config exists.
+        with open("./var/boot.json", "r") as f: # Get boot config
+            b = json.load(f)["boot"] # Get boot type
+            if b == "recovery": # If boot - recovery - start it.
+                boot_recovery()
+                
+            elif b == "os": # If os - start os
                 boot_os()
-            else:
-                print("Emergency: Booting recovery.")
-                try:
-                    r = dynamic_import("recovery")
-                except:
-                    print("Emergency: No recovery!!!")
-                else:
-                    r.run()
-                    sys.exit()
-    else:
+                
+            else: # If unknown boot type.
+                print("Emergency: Booting recovery.") 
+                boot_recovery()
+                    
+
+    else: # If no JSON:
         print("Emergency: Booting recovery - No JSON file")
-        try:
-            r = dynamic_import("recovery")
-        except:
-            print("Emergency: No recovery!!!")
-        else:
-            r.run()
-            sys.exit()
+        boot_recovery()
         
-
-def boot_os():
-    from kernel import kernel
+def boot_recovery(file: str = "recovery", kernel = None) -> None: # Recovery starter. File - is recovery module. Kernel - a kernel to boot with.
+    try:
+        r = dynamic_import(file)
+    except:
+        print("Emergency: No recovery!!!")
+    else:
+        if kernel == None:
+            r.run()
+        else:
+            print("Another kernel found. Trying to patch it...")
+            recoveryKernel = r.RecoveryKernel() # Init Recovery Kernel, but NOT START!
+            kernel.startup = r.RecoveryKernel.startup # Change PyT2 Kernel Startup function to Recovery Startup
+            
+            try:
+                ksets = json_load("var/kernel_sets.json") # Load Kernel Settings
+                boot_opt = json_load("var/boot.json") # Load Boot Settings
+                with open("./var/build_prop.json", "r") as f: # Load build properties
+                    data = json.load(f)["properties"]
+                    
+            except: # If some config not found:
+                print("Emergency: No configs found. Starting with premade recovery configs")
+                ksets = recoveryKernel.ksets # Get Kernel Settings from Recovery Kernel
+                boot_opt = recoveryKernel.boot_opt # Get Boot Options from Recovery Kernel
+                data = list(recoveryKernel.info.values()) # Get Build Properties from Recovery Kernel.
+            kernel = kernel(data) # Init patched kernel with selected build prop
+            kernel.ksets = ksets; kernel.boot_opt = boot_opt # Setup Kernel Settings and Boot Options 
+ 
+            kernel.startup() # Start Recovery
+            
+    sys.exit()
+    
+def boot_os(fallback: bool = False) -> None: # If fallback - start fallback hooks to start Recovery with base kernel in recovery mode.
+    try:
+        kernel = dynamic_import("kernel.kernel")
+    except:
+        print("Emergency: No Kernel found!")
+        boot_recovery()
+        
     with open("./var/build_prop.json", "r") as f:
-        d = json.load(f)
-    os.chdir("./kernel")
-    kernel.BaseKernel(d["properties"])
+        data = json.load(f)
 
-main()
+    if os.path.exists("etc" + os.path.sep + "init_scripts" + os.path.sep + "normal" + os.path.sep + "init.py"): # etc\init_scripts\normal\init.py
+        if not fallback:
+            init = dynamic_import("etc.init_scripts.normal.init")
+            print("Using normal init...")
+    elif os.path.exists("etc" + os.path.sep + "init_scripts" + os.path.sep + "fallback" + os.path.sep + "init.py"): # etc\init_scripts\normal\init.py
+        init = dynamic_import("etc.init_scripts.fallback.init")
+        print("Emergency: Using fallback init...")
+    else:
+        print("Emergency: No init scripts?! Trying to boot Recovery with stock (?) kernel")
+        boot_recovery(kernel = kernel.BaseKernel)
+
+    init.init(kernel.BaseKernel, data)
+
+if __name__ == "__main__":
+    main()

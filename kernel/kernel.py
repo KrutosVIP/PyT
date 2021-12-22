@@ -35,8 +35,7 @@ class BaseKernel:
                 "custom": info[7],
                 "hname": info[8]
         }
-        debug = self.info['debug']
-
+        
         self.uname = {
             "kname": "PyT-Zen",
             "version": self.info["version"],
@@ -44,7 +43,9 @@ class BaseKernel:
             "name": self.info["name"],
             "ktype": "PyZen-PyT"
         }
-
+        
+    def early_hooks(self):
+        debug = self.info['debug']
         if not os.path.isdir("../etc/"):
             os.mkdir("../etc/")
         if not os.path.isdir("../etc/systemctl"):
@@ -111,7 +112,6 @@ class BaseKernel:
         if debug:
             print(self.lines['kernel']['startup'])
         
-        self.startup()
         
 
     def login(self, user, passwd):
@@ -175,6 +175,7 @@ class BaseKernel:
             pass
     
     def startup(self):
+        self.early_hooks()
         debug = self.info['debug']
         self.user = None
         e = 0

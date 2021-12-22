@@ -1,14 +1,14 @@
 {
     "properties": [
-        "PyT-Kernel_18-37_280521_debugkeys",
-        "0.0.1-rc9-unstable",
+        "PyT-Kernel_22-12_221221_debugkeys",
+        "0.0.1-unstable",
         [
             "pyt2"
         ],
         "../mod",
         "pyt2",
         "../bin",
-        false,
+        true,
         false,
         "pyt2"
     ]
