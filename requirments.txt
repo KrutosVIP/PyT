@@ -8,3 +8,4 @@ python-slugify
 prompt_toolkit
 # pyvim # Use PyVim cause we need some editors i thought.
 bashlex
+chardet

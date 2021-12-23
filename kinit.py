@@ -1,4 +1,4 @@
-import json, os, sys, importlib
+import json, os, sys, importlib, traceback
 
 
 def dynamic_import(module): # Function to import modules
@@ -31,7 +31,7 @@ def boot_recovery(file: str = "recovery", kernel = None) -> None: # Recovery sta
     try:
         r = dynamic_import(file)
     except:
-        print("Emergency: No recovery!!!")
+        print("Emergency: No recovery!!! Something is really wrong!")
     else:
         if kernel == None:
             r.run()
@@ -59,27 +59,53 @@ def boot_recovery(file: str = "recovery", kernel = None) -> None: # Recovery sta
     sys.exit()
     
 def boot_os(fallback: bool = False) -> None: # If fallback - start fallback hooks to start Recovery with base kernel in recovery mode.
+    os.environ["__PYT_OS_ROOT"] = os.getcwd() # Set OS Root to this root.
+
+    scripts = ["etc" + os.path.sep + "init_scripts" + os.path.sep + "normal" + os.path.sep + "init.py", "etc" + os.path.sep + "init_scripts" + os.path.sep + "fallback" + os.path.sep + "init.py"]
+    
     try:
-        kernel = dynamic_import("kernel.kernel")
-    except:
-        print("Emergency: No Kernel found!")
+        kernel = dynamic_import("kernel.kernel") # Trying to import kernel
+    except: 
+        print("Emergency: No Kernel found!") # Boot Recovery without kernel
         boot_recovery()
         
-    with open("./var/build_prop.json", "r") as f:
-        data = json.load(f)
+    with open("./var/build_prop.json", "r") as f: # Loading build data
+        data = json.load(f) 
 
-    if os.path.exists("etc" + os.path.sep + "init_scripts" + os.path.sep + "normal" + os.path.sep + "init.py"): # etc\init_scripts\normal\init.py
-        if not fallback:
-            init = dynamic_import("etc.init_scripts.normal.init")
-            print("Using normal init...")
-    elif os.path.exists("etc" + os.path.sep + "init_scripts" + os.path.sep + "fallback" + os.path.sep + "init.py"): # etc\init_scripts\normal\init.py
+    # If there is normal scripts and we don`t want to use fallback
+    if os.path.exists(scripts[0]) and not fallback: # etc\init_scripts\normal\init.py
+        init = dynamic_import("etc.init_scripts.normal.init")
+        print("Using normal init...")
+
+    # Fallback
+    elif os.path.exists(scripts[1]): # etc\init_scripts\normal\init.py
         init = dynamic_import("etc.init_scripts.fallback.init")
         print("Emergency: Using fallback init...")
-    else:
+        
+    else: # If no scripts, start recovery
         print("Emergency: No init scripts?! Trying to boot Recovery with stock (?) kernel")
         boot_recovery(kernel = kernel.BaseKernel)
 
-    init.init(kernel.BaseKernel, data)
+    try:
+        os.environ["__PYT_KERNEL_ROOT"] = os.path.join(os.getcwd() + os.path.sep + "kernel") # Set Kernel root.
+        init.init(dynamic_import, "kernel.kernel", data) # start Init, with - dynamic_import function, kernel package and data.
+
+    except SystemExit: # if exit - exit ?)
+        sys.exit()
+    
+    except:
+        traceback.print_exc() # If error, print it.
+
+        os.chdir(os.environ["__PYT_OS_ROOT"]) # Change dir to OS Root
+        
+        if not fallback:# If no fallback was used, start it using fallback
+            print("Emergency: Error while using normal startup, use fallback scripts.")
+            boot_os(fallback=True)
+            
+        else: # If Fallback was used, start recovery mode
+            print("Emergency: Starting recovery!")
+            boot_recovery(kernel = kernel.BaseKernel)
+
 
 if __name__ == "__main__":
     main()
