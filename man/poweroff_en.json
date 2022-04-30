@@ -1,7 +1,0 @@
-{
-	"name": "Exit",
-	"version": "1.0.0", 
-	"description": "Quit PyT2",
-	"codename": "exit",
-	"alias": "poweroff"
-}

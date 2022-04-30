@@ -1,6 +1,0 @@
-{
-	"name": "Паника ядра",
-	"version": "1.0.0", 
-	"description": "делает KPanic 'Не синхронным'",
-	"codename": "kpanic"
-}

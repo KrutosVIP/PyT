@@ -1,6 +1,0 @@
-{
-	"name": "Перезагрузить",
-	"version": "1.0.1", 
-	"description": "Перезагружает машину\nАргументы: recovery/os",
-	"codename": "reboot"
-}

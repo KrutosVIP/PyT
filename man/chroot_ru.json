@@ -1,6 +1,0 @@
-{
-	"name": "Chroot",
-	"version": "1.0.1", 
-	"description": "Меняет файловый корень между extfs и sysfs.",
-	"codename": "chroot"
-}

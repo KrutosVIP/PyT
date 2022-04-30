@@ -1,6 +1,0 @@
-{
-	"name": "Kernel Panic",
-	"version": "1.0.0", 
-	"description": "Create KPanic 'Not syncing'",
-	"codename": "kpanic"
-}

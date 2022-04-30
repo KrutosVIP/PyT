@@ -1,6 +1,0 @@
-{
-	"name": "[CORE] Iceberg Startup Service",
-	"file": "iceberg_init",
-	"function": "start",
-	"type": "on_load"
-}

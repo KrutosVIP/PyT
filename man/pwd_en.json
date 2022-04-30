@@ -1,6 +1,0 @@
-{
-	"name": "Pwd",
-	"version": "1.0.0", 
-	"description": "Get working directory",
-	"codename": "pwd"
-}

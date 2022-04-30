@@ -1,6 +1,0 @@
-{
-	"name": "[CORE] Iceberg End Service",
-	"file": "iceberg_init",
-	"function": "start",
-	"type": "on_end"
-}

@@ -1,7 +1,0 @@
-{
-	"name": "Man or help.",
-	"version": "1.0.2", 
-	"description": "Help command, nothing else",
-	"codename": "help",
-	"alias": "man"
-}
