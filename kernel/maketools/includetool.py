@@ -1,5 +1,5 @@
 # Tools for make scripts. Need to include manually.
-import importlib.util, random, os, pathlib
+import importlib.util, random, os, pathlib, shutil
 
 def include_module(path):
     if os.path.exists(path):
@@ -21,3 +21,10 @@ def log(*args, **kwargs):
 
 def error(*args, **kwargs):
     print("make: ended up with error:", *args, **kwargs)
+
+def cleantool():
+  for root, dirs, files in os.walk("."):
+      for dir in dirs:
+          if dir == "__pycache__":
+              shutil.rmtree(os.path.join(root, dir))
+

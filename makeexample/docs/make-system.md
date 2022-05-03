@@ -17,7 +17,6 @@ from includetool import * # Import includetool with basic functions. This file p
 # include_module - include py file
 # log - log text
 # error - print error
-# cleantool - clean __pycache__ at path '.'
 
 import argparse, os, shutil 
 # Argparse for parsing command-line, os for functions with file and shutil for clean.
@@ -30,7 +29,10 @@ os.environ["__BUILD_PATH"] = "./build/" # Create environment variable with build
 
 # --- End init.
 # If you wanna clear all __pycache__ in all dirs, add this code. If not, delete it.
-cleantool()
+for root, dirs, files in os.walk("."):
+    for dir in dirs:
+        if dir == "__pycache__":
+            shutil.rmtree(os.path.join(root, dir))
 # --- End clear.
 def parse(): # Main parse function for commandline
     tasks = ", ".join([f"{x}" for x in functions]) # Create list from functions - "build, clean, ..."
@@ -68,8 +70,6 @@ Then, just make file `src/helloworld.py` with one string - `print("Hello World!"
 Now, lets write makefile. <br/>
 
 > In Kernel, you can see, what all make scripts going into maketools, like maketools/build.py, but in your project - you can store them everythere. For this tutorial, lets make them in src. 
-
-> **Also, if you wanna make kernel header or smth more, go into `kernel-makefiles.md`*
 
 Create `src/make.py`, and open it.
 We need some code at start:
@@ -114,7 +114,7 @@ functions = {"show_all": ["Show all avaliable tasks", show_all],
 ...
 ```
 
-> Full examples can be seen in makeexample, in root of repo.
+> Full examples can be seen in makeexample, in root of this project
 
 ## Testing
 Open console, go to project root dir using cd

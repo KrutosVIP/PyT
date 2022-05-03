@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from maketools.init import *
 from includetool import *
 
@@ -9,11 +10,9 @@ def get_path():
 os.environ["__GLOBAL_PATH"] = os.getcwd()
 os.environ["__BUILD_PATH"] = "./build/"
 os.environ["__HEADERS_PATH"] = "./include/"
+os.environ["__KERNEL_DEFCONFIG"] = "pyzen_defaults.json"
 # --- End init.
-for root, dirs, files in os.walk("."):
-    for dir in dirs:
-        if dir == "__pycache__":
-            shutil.rmtree(os.path.join(root, dir))
+cleantool()
 # --- End clear.
 
 

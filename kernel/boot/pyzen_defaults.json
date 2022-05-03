@@ -1,0 +1,11 @@
+{
+	"CONFIG_LOCALVERSION": "-pyzen-test",
+	"CONFIG_DEVICENAME": "all-generic",
+	"CONFIG_DEBUG": true,
+	"CONFIG_EXPERIMENTAL": true,
+	
+	"CONFIG_RD_GZIP": true,
+	"CONFIG_RD_XZ": false,
+	"CONFIG_RD_LZMA": true,
+	"CONFIG_RD_ZIP": true
+}

@@ -3,6 +3,7 @@ from includetool import * # Import includetool with basic functions. This file p
 # include_module - include py file
 # log - log text
 # error - print error
+# cleantool - clean __pycache__ at path '.'
 
 import argparse, os, shutil 
 # Argparse for parsing command-line, os for functions with file and shutil for clean.
@@ -15,10 +16,7 @@ os.environ["__BUILD_PATH"] = "./build/" # Create environment variable with build
 
 # --- End init.
 # If you wanna clear all __pycache__ in all dirs, add this code. If not, delete it.
-for root, dirs, files in os.walk("."):
-    for dir in dirs:
-        if dir == "__pycache__":
-            shutil.rmtree(os.path.join(root, dir))
+cleantool()
 # --- End clear.
 def parse(): # Main parse function for commandline
     tasks = ", ".join([f"{x}" for x in functions]) # Create list from functions - "build, clean, ..."
